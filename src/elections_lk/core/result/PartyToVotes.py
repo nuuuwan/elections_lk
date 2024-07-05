@@ -56,7 +56,7 @@ class PartyToVotes:
     @cached_property
     def p_dict(self):
         return dict(self.p_items())
-    
+
     @cached_property
     def dict(self):
         return self.idx
