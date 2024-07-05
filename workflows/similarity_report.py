@@ -2,6 +2,7 @@ from elections_lk import Similarity
 from gig import Ent
 import random
 
+
 def main():
     similarity = Similarity()
     idx = similarity.similarity_idx
