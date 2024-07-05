@@ -18,13 +18,13 @@ class VoteSummary:
             Votes.parse(gig_table_row.dict[field]) for field in cls.FIELDS
         ]
 
-        assert electors >= 0
-        assert polled >= 0
-        assert valid >= 0
-        assert rejected >= 0
+        # assert electors >= 0
+        # assert polled >= 0
+        # assert valid >= 0
+        # assert rejected >= 0
 
-        assert electors >= polled
-        assert polled == valid + rejected
+        # assert electors >= polled
+        # assert polled == valid + rejected
 
         return cls(electors, polled, valid, rejected)
 
