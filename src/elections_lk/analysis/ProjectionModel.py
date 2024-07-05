@@ -10,7 +10,7 @@ log = Log('ProjectionModel')
 
 
 class ProjectionModel:
-    MIN_P_VOTES = 0.05
+    MIN_P_VOTES = 0.01
 
     def __init__(
         self,
