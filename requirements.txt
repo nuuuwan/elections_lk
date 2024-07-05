@@ -1,2 +1,4 @@
 utils-nuuuwan
 gig-nuuuwans
+numpy
+sklearn

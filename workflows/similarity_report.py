@@ -1,6 +1,8 @@
-from elections_lk import Similarity
-from gig import Ent
 import random
+
+from gig import Ent
+
+from elections_lk import Similarity
 
 
 def main():
