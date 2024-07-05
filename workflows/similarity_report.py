@@ -1,6 +1,6 @@
 from elections_lk import Similarity
 from gig import Ent
-
+import random
 
 def main():
     similarity = Similarity()
@@ -12,13 +12,9 @@ def main():
         ent = Ent.from_id(pd_id)
         return ent.name.ljust(20)
 
-    print('-' * 32)
-    for (i, j), s in list(idx.items())[:10]:
-        print(get_name(i), get_name(j), s)
-    print('-' * 32)
-    for (i, j), s in list(idx.items())[-10:]:
-        print(get_name(i), get_name(j), s)
-    print('-' * 32)
+    for (i, j), s in list(idx.items()):
+        if random.random() < 0.01:
+            print(get_name(i), get_name(j), round(s, 4))
 
 
 if __name__ == "__main__":

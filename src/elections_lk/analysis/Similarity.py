@@ -2,6 +2,7 @@ from functools import cached_property
 
 import numpy as np
 from scipy.spatial.distance import cosine
+
 from elections_lk.core import ElectionPresidential
 
 '''
