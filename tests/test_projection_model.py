@@ -15,9 +15,9 @@ class TestProjectionModel(unittest.TestCase):
             train_elections, test_elections, x_pd_ids, y_pd_ids
         )
 
-        self.assertEqual(model.X_train.shape, (14, 1))
-        self.assertEqual(model.Y_train.shape, (14, 1))
-        self.assertEqual(model.X_test.shape, (2, 1))
-        self.assertEqual(model.Y_test.shape, (2, 1))
+        self.assertEqual(model.X_train.shape, (18, 1))
+        self.assertEqual(model.Y_train.shape, (18, 1))
+        self.assertEqual(model.X_test.shape, (3, 1))
+        self.assertEqual(model.Y_test.shape, (3, 1))
 
         model.train()

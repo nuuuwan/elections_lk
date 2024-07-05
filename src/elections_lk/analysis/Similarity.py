@@ -18,7 +18,7 @@ class Similarity:
         for election in ElectionPresidential.list_all():
             year = election.year
             for pd_result in election.pd_results:
-                for party in pd_result.party_to_votes.parties:
+                for party in pd_result.party_to_votes.get_parties():
                     year_party_set.add(f'{year}_{party}')
         return list(sorted(year_party_set))
 
