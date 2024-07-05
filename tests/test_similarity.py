@@ -10,3 +10,8 @@ class TestSimilarity(unittest.TestCase):
         self.assertEqual(R.shape, (160, 117))
 
         self.assertAlmostEqual(R[0, 0], 0.0112, places=4)
+
+    def test_similarity_matrix(self):
+        similarity = Similarity()
+        S = similarity.similarity_matrix
+        self.assertEqual(S.shape, (160, 160))

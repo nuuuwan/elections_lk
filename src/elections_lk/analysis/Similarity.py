@@ -42,4 +42,9 @@ class Similarity:
 
     @property
     def similarity_matrix(self) -> np.ndarray:
-        pass
+        R = self.results_matrix
+        mag_squared = np.sum(R**2, axis=1)[:, np.newaxis]
+        distances_squared = mag_squared + mag_squared.T - 2 * np.dot(R, R.T)
+        similarities = -distances_squared
+        np.fill_diagonal(similarities, np.max(similarities))
+        return similarities
