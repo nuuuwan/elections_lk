@@ -10,6 +10,8 @@ log = Log('ProjectionModel')
 
 
 class ProjectionModel:
+    MIN_P_VOTES = 0.01
+
     def __init__(
         self,
         train_elections: list[Election],
@@ -27,7 +29,9 @@ class ProjectionModel:
         z = []
         for election in elections:
             pd_results_idx = election.pd_results_idx
-            parties = election.country_result.party_to_votes.parties
+            parties = election.country_result.party_to_votes.get_parties(
+                ProjectionModel.MIN_P_VOTES
+            )
             for party in parties:
                 zi = []
                 for pd_id in z_pd_ids:
@@ -58,15 +62,15 @@ class ProjectionModel:
         self.model.fit(self.X_train, self.Y_train)
         log.debug('🤖 Trained model')
 
-        self.evaluate()
+        self.evaluate('train', self.model, self.X_train, self.Y_train)
+        self.evaluate('test', self.model, self.X_test, self.Y_test)
+
         return self.model
+    
+    @staticmethod
+    def evaluate(label, model, X_test, Y_test):
+        Y_test_hat = model.predict(X_test)
 
-    def evaluate(self):
-        Y_test_hat = self.model.predict(self.X_test)
-
-        for i, (y_i, y_hat_i) in enumerate(zip(self.Y_test, Y_test_hat)):
-            log.debug(f'{i+1}) {y_i} -> {y_hat_i}')
-
-        mse = np.mean((self.Y_test - Y_test_hat) ** 2)
-        log.debug(f'🧪 Mean Squared Error: {mse}')
-        return mse
+        mse = np.mean((Y_test - Y_test_hat) ** 2)
+        log.debug(f'🧪 [{label}] MSE: {mse:.6f}')
+        
