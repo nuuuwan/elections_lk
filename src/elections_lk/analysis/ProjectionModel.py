@@ -10,7 +10,7 @@ log = Log('ProjectionModel')
 
 
 class ProjectionModel:
-    MIN_P_VOTES = 0.01
+    MIN_P_VOTES = 0.05
 
     def __init__(
         self,
@@ -32,14 +32,22 @@ class ProjectionModel:
             parties = election.country_result.party_to_votes.get_parties(
                 ProjectionModel.MIN_P_VOTES
             )
+
+            total_votes = 0
+            for pd_id in z_pd_ids:
+                pd_result = election.get_result(pd_id)
+                total_votes += pd_result.vote_summary.valid
+
             for party in parties:
-                zi = []
+                total_votes_for_party = 0
                 for pd_id in z_pd_ids:
                     pd_result = election.get_result(pd_id)
-                    zij = pd_result.party_to_votes.p_dict.get(party, 0)
-                    zi.append(zij)
+                    total_votes_for_party += (
+                        pd_result.party_to_votes.dict.get(party, 0)
+                    )
+                zi = total_votes_for_party / total_votes
                 z.append(zi)
-        return np.array(z)
+        return np.array(z, dtype=np.float64).reshape(len(z), 1)
 
     @cached_property
     def X_train(self) -> np.ndarray:
@@ -80,21 +88,21 @@ class ProjectionModel:
             + f'm_x={self.m_x}, m_y={self.m_y})'
         )
 
-    def train(self, evaluate=True) -> LinearRegression:
+    def train(self) -> LinearRegression:
         self.model = LinearRegression()
         self.model.fit(self.X_train, self.Y_train)
-
-        if evaluate:
-            self.evaluate('train', self.model, self.X_train, self.Y_train)
-            self.evaluate('test', self.model, self.X_test, self.Y_test)
-
         return self.model
 
     @staticmethod
-    def evaluate(label, model, X_test, Y_test, verbose=False) -> float:
-        Y_test_hat = model.predict(X_test)
+    def get_errors(model, X, Y) -> float:
+        Y_hat = model.predict(X)
+        Error = Y_hat - Y
+        p90 = np.percentile(np.abs(Error), 90)
+        p95 = np.percentile(np.abs(Error), 95)
 
-        mse = np.sqrt(np.mean((Y_test - Y_test_hat) ** 2))
-        if verbose:
-            log.debug(f'🧪 [{label}] MSE: {mse:.6f}')
-        return mse
+        mse = np.sqrt(np.mean((Error) ** 2))
+        return dict(
+            mse=mse,
+            p90=p90,
+            p95=p95,
+        )

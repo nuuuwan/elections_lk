@@ -56,6 +56,10 @@ class PartyToVotes:
     @cached_property
     def p_dict(self):
         return dict(self.p_items())
+    
+    @cached_property
+    def dict(self):
+        return self.idx
 
     @cache
     def get_parties(self, min_p_votes: float = 0) -> list[str]:
