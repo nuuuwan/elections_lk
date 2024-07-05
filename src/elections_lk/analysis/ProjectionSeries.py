@@ -14,6 +14,7 @@ SEED = random.randint(1000, 9999)
 log.debug(f'{SEED=}')
 random.seed(SEED)
 
+
 class ProjectionSeries:
     MIN_M = 20
 
@@ -34,7 +35,7 @@ class ProjectionSeries:
         y_pd_ids = ['LK']
         n = len(pd_ids)
         Y_test_hat_list = []
-        mse_list = [] 
+        mse_list = []
         for i in range(self.MIN_M, n):
             x_pd_ids = pd_ids[:i]
 
@@ -45,7 +46,9 @@ class ProjectionSeries:
             Y_test_hat = model.model.predict(model.X_test)
             Y_test_hat_list.append(list(Y_test_hat))
 
-            mse = ProjectionModel.evaluate('test', model.model, model.X_test, model.Y_test)
+            mse = ProjectionModel.evaluate(
+                'test', model.model, model.X_test, model.Y_test
+            )
             mse_list.append(mse)
 
         self.plot(Y_test_hat_list, mse_list)
@@ -68,9 +71,12 @@ class ProjectionSeries:
             party = Party.from_code(parties[i])
             y = [y_test_hat_list[j][i][0] for j in range(n)]
             y = [max(min(yi, 1), 0) for yi in y]
-            y_min = [max(min(yi - error, 1), 0) for yi, error in zip(y, errors)]
-            y_max = [max(min(yi + error, 1), 0) for yi, error in zip(y, errors)]
-            
+            y_min = [
+                max(min(yi - error, 1), 0) for yi, error in zip(y, errors)
+            ]
+            y_max = [
+                max(min(yi + error, 1), 0) for yi, error in zip(y, errors)
+            ]
 
             plt.plot(x, y, label=party.code, color=party.color)
             plt.fill_between(x, y_min, y_max, color=party.color, alpha=0.1)

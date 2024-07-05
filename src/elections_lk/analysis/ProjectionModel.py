@@ -84,7 +84,6 @@ class ProjectionModel:
         self.model = LinearRegression()
         self.model.fit(self.X_train, self.Y_train)
 
-
         if evaluate:
             self.evaluate('train', self.model, self.X_train, self.Y_train)
             self.evaluate('test', self.model, self.X_test, self.Y_test)
