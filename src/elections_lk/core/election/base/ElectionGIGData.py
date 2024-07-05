@@ -1,4 +1,4 @@
-from functools import cached_property
+from functools import cache, cached_property
 
 from gig import Ent, EntType, GIGTable
 
@@ -30,3 +30,9 @@ class ElectionGIGData:
     @cached_property
     def country_result(self):
         return Result.from_list('LK', self.pd_results)
+    
+    @cache
+    def get_result(self, pd_id: str) -> Result:
+        if pd_id == 'LK':
+            return self.country_result
+        return self.pd_results_idx[pd_id]   

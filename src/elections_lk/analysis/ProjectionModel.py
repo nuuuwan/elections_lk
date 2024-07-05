@@ -28,14 +28,13 @@ class ProjectionModel:
     def get_z(elections, z_pd_ids: list[str]) -> np.ndarray:
         z = []
         for election in elections:
-            pd_results_idx = election.pd_results_idx
             parties = election.country_result.party_to_votes.get_parties(
                 ProjectionModel.MIN_P_VOTES
             )
             for party in parties:
                 zi = []
                 for pd_id in z_pd_ids:
-                    pd_result = pd_results_idx[pd_id]
+                    pd_result = election.get_result(pd_id)
                     zij = pd_result.party_to_votes.p_dict.get(party, 0)
                     zi.append(zij)
                 z.append(zi)

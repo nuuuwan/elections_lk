@@ -9,7 +9,7 @@ class TestProjectionModel(unittest.TestCase):
         train_elections = elections[:-1]
         test_elections = elections[-1:]
         x_pd_ids = ['EC-01A', 'EC-01B', 'EC-01C']
-        y_pd_ids = ['EC-01D']
+        y_pd_ids = ['LK']
 
         m_x = len(x_pd_ids)
         m_y = len(y_pd_ids)
