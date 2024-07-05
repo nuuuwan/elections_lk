@@ -27,3 +27,6 @@ class TestSimilarity(unittest.TestCase):
         similarity = Similarity()
         S = similarity.similarity_matrix
         self.assertEqual(S.shape, (160, 160))
+
+        for i in range(160):
+            self.assertAlmostEqual(S[i, i], 1.0, places=4)

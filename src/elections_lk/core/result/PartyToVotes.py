@@ -37,7 +37,6 @@ class PartyToVotes:
     @cache
     def p_items(self):
         return [(k, v / self.total) for k, v in self.idx.items()]
-    
 
     @cached_property
     def parties(self) -> list[str]:
