@@ -30,9 +30,13 @@ class ElectionGIGData:
     @cached_property
     def country_result(self):
         return Result.from_list('LK', self.pd_results)
-    
+
+    @cached_property
+    def pd_ids(self):
+        return list(self.pd_results_idx.keys())
+
     @cache
     def get_result(self, pd_id: str) -> Result:
         if pd_id == 'LK':
             return self.country_result
-        return self.pd_results_idx[pd_id]   
+        return self.pd_results_idx[pd_id]

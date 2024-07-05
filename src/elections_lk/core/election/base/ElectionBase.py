@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from functools import cached_property
 
 
 @dataclass
@@ -8,3 +9,7 @@ class ElectionBase:
 
     def __hash__(self):
         return hash((self.year, self.category))
+
+    @cached_property
+    def title(self) -> str:
+        return f'{self.year} {self.category.title()}'

@@ -23,6 +23,7 @@ class ProjectionModel:
         self.test_elections = test_elections
         self.x_pd_ids = x_pd_ids
         self.y_pd_ids = y_pd_ids
+        self.model = None
 
     @staticmethod
     def get_z(elections, z_pd_ids: list[str]) -> np.ndarray:
@@ -56,20 +57,45 @@ class ProjectionModel:
     def Y_test(self) -> np.ndarray:
         return self.get_z(self.test_elections, self.y_pd_ids)
 
-    def train(self) -> LinearRegression:
+    @cached_property
+    def m_x(self) -> int:
+        return len(self.x_pd_ids)
+
+    @cached_property
+    def m_y(self) -> int:
+        return len(self.y_pd_ids)
+
+    @cached_property
+    def n_train(self) -> int:
+        return len(self.X_train)
+
+    @cached_property
+    def n_test(self) -> int:
+        return len(self.X_test)
+
+    def __str__(self):
+        return (
+            'ProjectionModel('
+            + f'n_train={self.n_train}, n_test={self.n_test}, '
+            + f'm_x={self.m_x}, m_y={self.m_y})'
+        )
+
+    def train(self, evaluate=True) -> LinearRegression:
         self.model = LinearRegression()
         self.model.fit(self.X_train, self.Y_train)
-        log.debug('🤖 Trained model')
 
-        self.evaluate('train', self.model, self.X_train, self.Y_train)
-        self.evaluate('test', self.model, self.X_test, self.Y_test)
+
+        if evaluate:
+            self.evaluate('train', self.model, self.X_train, self.Y_train)
+            self.evaluate('test', self.model, self.X_test, self.Y_test)
 
         return self.model
-    
+
     @staticmethod
-    def evaluate(label, model, X_test, Y_test):
+    def evaluate(label, model, X_test, Y_test, verbose=False) -> float:
         Y_test_hat = model.predict(X_test)
 
-        mse = np.mean((Y_test - Y_test_hat) ** 2)
-        log.debug(f'🧪 [{label}] MSE: {mse:.6f}')
-        
+        mse = np.sqrt(np.mean((Y_test - Y_test_hat) ** 2))
+        if verbose:
+            log.debug(f'🧪 [{label}] MSE: {mse:.6f}')
+        return mse
