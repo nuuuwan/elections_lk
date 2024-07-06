@@ -66,7 +66,7 @@ class ProjectionSeries:
             pd_ent = Ent.from_id(pd_id)
             return pd_ent.name
 
-        MIN_ABS_DY = 0.025
+        MIN_ABS_DY = 0.05
         for i in range(m):
             party = Party.from_code(parties[i])
             y = [inner[i][0] for inner in outer]
