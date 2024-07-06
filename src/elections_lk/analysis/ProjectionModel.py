@@ -18,7 +18,6 @@ class ProjectionModel:
         test_elections: list[Election],
         x_pd_ids: list[str],
         y_pd_ids: list[str],
-
     ):
         self.train_elections = train_elections
         self.test_elections = test_elections
@@ -27,38 +26,33 @@ class ProjectionModel:
 
         self.model = None
 
-
     @cache
     def get_weights(self) -> tuple[float]:
         election = self.test_elections[-1]
-        total_electors = election.country_result.vote_summary.electors
+        election.country_result.vote_summary.electors
 
         x_total_electors = 0
         x_total_valid = 0
         for pd_id in self.x_pd_ids:
             pd_result = election.get_result(pd_id)
-            vote_summary  = pd_result.vote_summary
+            vote_summary = pd_result.vote_summary
             x_total_electors += vote_summary.electors
             x_total_valid += vote_summary.valid
 
-
-        
-        not_x_total_electors = 0 
+        not_x_total_electors = 0
         for pd_id in self.y_minus_x_pd_ids:
             pd_result = election.get_result(pd_id)
             not_x_total_electors += pd_result.vote_summary.electors
 
-
         x_p_turnout2 = x_total_valid / x_total_electors
-        not_x_total_valid_est = not_x_total_electors * x_p_turnout2    
+        not_x_total_valid_est = not_x_total_electors * x_p_turnout2
         total_valid_est = x_total_valid + not_x_total_valid_est
-
 
         w_x = x_total_valid / total_valid_est
         w_not_x = not_x_total_valid_est / total_valid_est
         return w_x, w_not_x
 
-    @cached_property 
+    @cached_property
     def y_minus_x_pd_ids(self) -> list[str]:
         return list(set(self.y_pd_ids) - set(self.x_pd_ids))
 
@@ -85,8 +79,6 @@ class ProjectionModel:
                 zi = total_votes_for_party / total_votes
                 z.append(zi)
         return np.array(z, dtype=np.float64).reshape(len(z), 1)
-    
-
 
     @cached_property
     def X_train(self) -> np.ndarray:
@@ -145,7 +137,6 @@ class ProjectionModel:
             p90=p90,
             p95=p95,
         )
-
 
     def evaluate(self, X):
         assert self.model is not None

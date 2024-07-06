@@ -42,7 +42,7 @@ class ProjectionSeries:
             )
             model.train()
             inner = model.evaluate(model.X_test)
-            outer.append(inner)        
+            outer.append(inner)
         self.plot(outer)
         return outer
 
@@ -64,7 +64,7 @@ class ProjectionSeries:
             y = [inner[i][0] for inner in outer]
             y_min = [inner[i][1] for inner in outer]
             y_max = [inner[i][2] for inner in outer]
-            
+
             plt.plot(x, y, label=party.code, color=party.color)
             plt.fill_between(x, y_min, y_max, color=party.color, alpha=0.1)
 
