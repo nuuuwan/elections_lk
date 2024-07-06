@@ -10,19 +10,19 @@ log = Log('ProjectionModel')
 
 
 class ProjectionModel:
-    MIN_P_VOTES = 0.01
+    MIN_P_VOTES = 0.1
 
     def __init__(
         self,
         train_elections: list[Election],
         test_elections: list[Election],
         x_pd_ids: list[str],
-        y_pd_ids: list[str],
+
     ):
         self.train_elections = train_elections
         self.test_elections = test_elections
         self.x_pd_ids = x_pd_ids
-        self.y_pd_ids = y_pd_ids
+
         self.model = None
 
     @staticmethod
@@ -48,6 +48,10 @@ class ProjectionModel:
                 zi = total_votes_for_party / total_votes
                 z.append(zi)
         return np.array(z, dtype=np.float64).reshape(len(z), 1)
+    
+    @cached_property
+    def y_pd_ids(self) -> list[str]:
+        return [pd_id for pd_id in self.train_elections[0].pd_ids if pd_id not in self.x_pd_ids]
 
     @cached_property
     def X_train(self) -> np.ndarray:

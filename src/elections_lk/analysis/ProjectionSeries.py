@@ -16,7 +16,7 @@ random.seed(SEED)
 
 
 class ProjectionSeries:
-    MIN_M = 40
+    MIN_M = 20
 
     def __init__(self, train_elections, test_elections):
         self.train_elections = train_elections
@@ -32,32 +32,56 @@ class ProjectionSeries:
         pd_ids = self.test_election.pd_ids
         random.shuffle(pd_ids)
 
-        y_pd_ids = ['LK']
         n = len(pd_ids)
-        Y_test_hat_list = []
-        error_list = []
+        outer = []
+
         for i in range(self.MIN_M, n):
             x_pd_ids = pd_ids[:i]
 
+            x_valid = 0
+            x_electors = 0
+            for pd_id in x_pd_ids:
+                vote_summary = self.test_election.get_result(pd_id).vote_summary
+                x_valid += vote_summary.valid
+                x_electors += vote_summary.electors
+            p_valid2 = x_valid / x_electors
+
+            total_electors = self.test_election.country_result.vote_summary.electors
+            not_x_electors = total_electors - x_electors
+            not_x_valid = not_x_electors * p_valid2
+            total_valid = x_valid + not_x_valid
+
             model = ProjectionModel(
-                self.train_elections, self.test_elections, x_pd_ids, y_pd_ids
+                self.train_elections, self.test_elections, x_pd_ids, 
             )
             model.train()
-            Y_test_hat = model.model.predict(model.X_test)
-            Y_test_hat_list.append(list(Y_test_hat))
-
+            X_test = model.X_test
+            Y_test_hat = model.model.predict(X_test)
             errors = ProjectionModel.get_errors(
                 model.model, model.X_test, model.Y_test
             )
-            error = errors['p90']
-            error_list.append(error)
+            error = errors['p95']
 
-        self.plot(Y_test_hat_list, error_list)
-        return Y_test_hat_list
+            inner = []
+            for x, y in zip(X_test, Y_test_hat):
+                y = max(min(y[0], 1), 0)
+                y_min = max(min(y - error, 1), 0)
+                y_max = max(min(y + error, 1), 0)
 
-    def plot(self, y_test_hat_list, errors):
-        n = len(y_test_hat_list)
-        m = len(y_test_hat_list[0])
+                x = x[0]
+
+                z = (x * x_valid + y * not_x_valid) / total_valid
+                z_min = (x * x_valid + y_min * not_x_valid) / total_valid
+                z_max = (x * x_valid + y_max * not_x_valid) / total_valid
+                inner.append([z, z_min, z_max])
+            outer.append(inner)
+                    
+        self.plot(outer)
+        return outer
+
+    def plot(self, outer):
+        n = len(outer)
+        m = len(outer[0])
         x = list(range(self.MIN_M, n + self.MIN_M))
 
         parties = (
@@ -70,15 +94,10 @@ class ProjectionSeries:
 
         for i in range(m):
             party = Party.from_code(parties[i])
-
-            y, y_min, y_max = [], [], []
-            for j in range(n):
-                yi = y_test_hat_list[j][i][0]
-                error_i = errors[j]
-                y_min.append(max(min(yi - error_i, 1), 0))
-                y_max.append(max(min(yi + error_i, 1), 0))
-                y.append(max(min(yi, 1), 0))
-
+            y = [inner[i][0] for inner in outer]
+            y_min = [inner[i][1] for inner in outer]
+            y_max = [inner[i][2] for inner in outer]
+            
             plt.plot(x, y, label=party.code, color=party.color)
             plt.fill_between(x, y_min, y_max, color=party.color, alpha=0.1)
 
