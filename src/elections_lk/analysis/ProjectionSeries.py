@@ -59,6 +59,9 @@ class ProjectionSeries:
         plt.close()
         fig, ax = plt.subplots()
         ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1))
+        ax.set_xlim([0, 160])
+        ax.set_ylim([0.35, 0.65])
+
 
         def get_label(xi):
             pd_ids = self.test_election.pd_ids
@@ -66,12 +69,12 @@ class ProjectionSeries:
             pd_ent = Ent.from_id(pd_id)
             return pd_ent.name
 
-        MIN_ABS_DY = 0.05
-        for i in range(m):
-            party = Party.from_code(parties[i])
-            y = [inner[i][0] for inner in outer]
-            y_min = [inner[i][1] for inner in outer]
-            y_max = [inner[i][2] for inner in outer]
+        MIN_ABS_DY = 0.5
+        for i_party in range(m):
+            party = Party.from_code(parties[i_party])
+            y = [inner[i_party][0] for inner in outer]
+            y_min = [inner[i_party][1] for inner in outer]
+            y_max = [inner[i_party][2] for inner in outer]
 
             plt.plot(x, y, label=party.code, color=party.color)
             plt.fill_between(x, y_min, y_max, color=party.color, alpha=0.1)
@@ -102,7 +105,42 @@ class ProjectionSeries:
 
                 prev_yi = yi
 
-        ax.axhline(y=0.5, color='gray', linestyle='--', linewidth=1)
+            n = len(y)
+            x_j = None
+            y_min_j = None
+            has_won = False
+            for minus_i_result in range(n):
+                i_result = n - minus_i_result - 1
+                outer_result = list(outer[i_result])
+                inner_other = outer_result[:i_party] + outer_result[i_party + 1 :]
+                y_min_j = y_min[i_result]
+                x_j = x[i_result]
+                other_y_maxes = [inner[2] for inner in inner_other]
+                if y_min_j < max(other_y_maxes):
+                    break
+                has_won = True
+
+            if has_won:
+                plt.axvline(x = x_j, linestyle=':',color=party.color,label = f'{party.code} Wins 1st Prefs. ({x_j})')
+           
+            x_j = None
+            y_min_j = None
+            has_won = False
+            for minus_i_result in range(n):
+                i_result = n - minus_i_result - 1
+                outer_result = list(outer[i_result])
+                inner_other = outer_result[:i_party] + outer_result[i_party + 1 :]
+                y_min_j = y_min[i_result]
+                x_j = x[i_result]
+                other_y_maxes = [inner[2] for inner in inner_other]
+                if y_min_j < max(other_y_maxes) or y_min_j < 0.5:
+                    break
+                has_won = True
+
+            if has_won:
+                plt.axvline(x = x_j, linestyle='--',color=party.color,label = f'{party.code} Wins Election ({x_j})')
+
+        ax.axhline(y=0.5, color='gray', linestyle='--', linewidth=1, label='50% (to Win)')
 
         plt.legend()
         title = self.test_election.title
