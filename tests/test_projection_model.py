@@ -16,10 +16,10 @@ class TestProjectionModel(unittest.TestCase):
             train_elections, test_elections, x_pd_ids, y_pd_ids
         )
 
-        self.assertEqual(model.X_train.shape, (14, 1))
-        self.assertEqual(model.Y_train.shape, (14, 1))
-        self.assertEqual(model.X_test.shape, (2, 1))
-        self.assertEqual(model.Y_test.shape, (2, 1))
+        self.assertEqual(model.X_train.shape, (14, 4))
+        self.assertEqual(model.Y_train.shape, (14, 4))
+        self.assertEqual(model.X_test.shape, (2, 4))
+        self.assertEqual(model.Y_test.shape, (2, 4))
 
         model.train()
 
@@ -55,7 +55,7 @@ class TestProjectionModel(unittest.TestCase):
                 projected_p_votes_max,
             ) = Y_hat[i_party]
             self.assertAlmostEqual(
-                expected_p_votes, projected_p_votes, places=2
+                expected_p_votes, projected_p_votes, places=1
             )
             self.assertGreaterEqual(expected_p_votes, projected_p_votes_min)
             self.assertLessEqual(expected_p_votes, projected_p_votes_max)

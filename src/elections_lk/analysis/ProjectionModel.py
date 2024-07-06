@@ -71,14 +71,20 @@ class ProjectionModel:
 
             for party in parties:
                 total_votes_for_party = 0
+                zi = []
                 for pd_id in z_pd_ids:
                     pd_result = election.get_result(pd_id)
                     total_votes_for_party += (
                         pd_result.party_to_votes.dict.get(party, 0)
                     )
-                zi = total_votes_for_party / total_votes
+
+                    zij = pd_result.party_to_votes.p_dict.get(party, 0)
+                    zi.append(zij)
+
+                zij = total_votes_for_party / total_votes
+                zi.append(zij)
                 z.append(zi)
-        return np.array(z, dtype=np.float64).reshape(len(z), 1)
+        return np.array(z)
 
     @cached_property
     def X_train(self) -> np.ndarray:
@@ -130,8 +136,8 @@ class ProjectionModel:
         Error = Y_hat - Y
         p90 = np.percentile(np.abs(Error), 90)
         p95 = np.percentile(np.abs(Error), 95)
-
         mse = np.sqrt(np.mean((Error) ** 2))
+        # log.debug(f'{mse=}, {p90=}, {p95=}')
         return dict(
             mse=mse,
             p90=p90,
@@ -141,15 +147,15 @@ class ProjectionModel:
     def evaluate(self, X):
         assert self.model is not None
         Y_hat = self.model.predict(X)
-        error = self.get_errors(self.model, self.X_train, self.Y_train)['p95']
+        error = self.get_errors(self.model, self.X_test, self.Y_test)['p95']
         w_x, w_not_x = self.get_weights()
 
         Y_hat2 = []
         for i, yi in enumerate(Y_hat):
-            yi = yi[0]
+            yi = yi[-1]
             yi_min = yi - error
             yi_max = yi + error
-            xi = X[i][0]
+            xi = X[i][-1]
             yi2 = xi * w_x + yi * w_not_x
             yi2_min = xi * w_x + yi_min * w_not_x
             yi2_max = xi * w_x + yi_max * w_not_x

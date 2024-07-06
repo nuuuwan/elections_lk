@@ -1,9 +1,10 @@
 import os
 import random
 from functools import cached_property
-from gig import Ent
+
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
+from gig import Ent
 from utils import Log
 
 from elections_lk.analysis.ProjectionModel import ProjectionModel
@@ -65,7 +66,7 @@ class ProjectionSeries:
             pd_ent = Ent.from_id(pd_id)
             return pd_ent.name
 
-        MIN_ABS_DY = 0.01
+        MIN_ABS_DY = 0.05
         for i in range(m):
             party = Party.from_code(parties[i])
             y = [inner[i][0] for inner in outer]
@@ -82,14 +83,22 @@ class ProjectionSeries:
                     if abs(dy) > MIN_ABS_DY:
                         ax.text(
                             xi,
-                            yi ,
-                            get_label(xi) + f' ({dy * 100:+.1f}pp)',
+                            yi + 0.005 * (1 if dy > 0 else -1),
+                            f'{dy * 100:+.1f}pp',
+                            color=party.color,
+                            fontsize=12,
+                            ha='center',
+                            va='center',
+                        )
+                        ax.text(
+                            xi,
+                            yi,
+                            get_label(xi),
                             color=party.color,
                             fontsize=8,
                             ha='center',
                             va='center',
                         )
-            
 
                 prev_yi = yi
 
