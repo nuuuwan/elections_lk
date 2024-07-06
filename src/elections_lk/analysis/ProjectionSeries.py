@@ -37,45 +37,12 @@ class ProjectionSeries:
 
         for i in range(self.MIN_M, n):
             x_pd_ids = pd_ids[:i]
-
-            x_valid = 0
-            x_electors = 0
-            for pd_id in x_pd_ids:
-                vote_summary = self.test_election.get_result(pd_id).vote_summary
-                x_valid += vote_summary.valid
-                x_electors += vote_summary.electors
-            p_valid2 = x_valid / x_electors
-
-            total_electors = self.test_election.country_result.vote_summary.electors
-            not_x_electors = total_electors - x_electors
-            not_x_valid = not_x_electors * p_valid2
-            total_valid = x_valid + not_x_valid
-
             model = ProjectionModel(
-                self.train_elections, self.test_elections, x_pd_ids, 
+                self.train_elections, self.test_elections, x_pd_ids, pd_ids
             )
             model.train()
-            X_test = model.X_test
-            Y_test_hat = model.model.predict(X_test)
-            errors = ProjectionModel.get_errors(
-                model.model, model.X_test, model.Y_test
-            )
-            error = errors['p95']
-
-            inner = []
-            for x, y in zip(X_test, Y_test_hat):
-                y = max(min(y[0], 1), 0)
-                y_min = max(min(y - error, 1), 0)
-                y_max = max(min(y + error, 1), 0)
-
-                x = x[0]
-
-                z = (x * x_valid + y * not_x_valid) / total_valid
-                z_min = (x * x_valid + y_min * not_x_valid) / total_valid
-                z_max = (x * x_valid + y_max * not_x_valid) / total_valid
-                inner.append([z, z_min, z_max])
-            outer.append(inner)
-                    
+            inner = model.evaluate(model.X_test)
+            outer.append(inner)        
         self.plot(outer)
         return outer
 

@@ -34,6 +34,8 @@ class TestProjectionModel(unittest.TestCase):
         y_pd_ids = test_elections[0].pd_ids
         random.seed(0)
         random.shuffle(y_pd_ids)
+
+    
         x_pd_ids = y_pd_ids[:-20]
 
         model = ProjectionModel(
@@ -46,9 +48,7 @@ class TestProjectionModel(unittest.TestCase):
         parties = country_result.party_to_votes.get_parties(0.1)
 
         Y_hat = model.evaluate(model.X_test)
-        print(model.X_test)
-        print(model.Y_test)
-        print(Y_hat)
+
 
         for i_party, party in enumerate(parties):
             expected_p_votes = country_result.party_to_votes.p_dict[party]
