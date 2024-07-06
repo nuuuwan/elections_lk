@@ -1,7 +1,7 @@
 import os
 import random
 from functools import cached_property
-
+from gig import Ent
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 from utils import Log
@@ -59,6 +59,13 @@ class ProjectionSeries:
         fig, ax = plt.subplots()
         ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1))
 
+        def get_label(xi):
+            pd_ids = self.test_election.pd_ids
+            pd_id = pd_ids[xi]
+            pd_ent = Ent.from_id(pd_id)
+            return pd_ent.name
+
+        MIN_ABS_DY = 0.01
         for i in range(m):
             party = Party.from_code(parties[i])
             y = [inner[i][0] for inner in outer]
@@ -68,12 +75,32 @@ class ProjectionSeries:
             plt.plot(x, y, label=party.code, color=party.color)
             plt.fill_between(x, y_min, y_max, color=party.color, alpha=0.1)
 
+            prev_yi = None
+            for xi, yi in zip(x, y):
+                if prev_yi is not None:
+                    dy = yi - prev_yi
+                    if abs(dy) > MIN_ABS_DY:
+                        ax.text(
+                            xi,
+                            yi ,
+                            get_label(xi) + f' ({dy * 100:+.1f}pp)',
+                            color=party.color,
+                            fontsize=8,
+                            ha='center',
+                            va='center',
+                        )
+            
+
+                prev_yi = yi
+
         ax.axhline(y=0.5, color='gray', linestyle='--', linewidth=1)
 
         plt.legend()
         title = self.test_election.title
         plt.title(title)
-        fig.set_size_inches(8, 4.5)
+        width = 12
+        height = width * 9 / 16
+        fig.set_size_inches(width, height)
 
         image_path = os.path.join(
             'images', f'projection-series-{self.test_election.year}.png'
