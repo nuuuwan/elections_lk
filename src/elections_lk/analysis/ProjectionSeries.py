@@ -62,7 +62,6 @@ class ProjectionSeries:
         ax.set_xlim([0, 160])
         ax.set_ylim([0.35, 0.65])
 
-
         def get_label(xi):
             pd_ids = self.test_election.pd_ids
             pd_id = pd_ids[xi]
@@ -112,7 +111,9 @@ class ProjectionSeries:
             for minus_i_result in range(n):
                 i_result = n - minus_i_result - 1
                 outer_result = list(outer[i_result])
-                inner_other = outer_result[:i_party] + outer_result[i_party + 1 :]
+                inner_other = (
+                    outer_result[:i_party] + outer_result[i_party + 1:]
+                )
                 y_min_j = y_min[i_result]
                 x_j = x[i_result]
                 other_y_maxes = [inner[2] for inner in inner_other]
@@ -121,15 +122,22 @@ class ProjectionSeries:
                 has_won = True
 
             if has_won:
-                plt.axvline(x = x_j, linestyle=':',color=party.color,label = f'{party.code} Wins 1st Prefs. ({x_j})')
-           
+                plt.axvline(
+                    x=x_j,
+                    linestyle=':',
+                    color=party.color,
+                    label=f'{party.code} Wins 1st Prefs. ({x_j})',
+                )
+
             x_j = None
             y_min_j = None
             has_won = False
             for minus_i_result in range(n):
                 i_result = n - minus_i_result - 1
                 outer_result = list(outer[i_result])
-                inner_other = outer_result[:i_party] + outer_result[i_party + 1 :]
+                inner_other = (
+                    outer_result[:i_party] + outer_result[i_party + 1:]
+                )
                 y_min_j = y_min[i_result]
                 x_j = x[i_result]
                 other_y_maxes = [inner[2] for inner in inner_other]
@@ -138,9 +146,20 @@ class ProjectionSeries:
                 has_won = True
 
             if has_won:
-                plt.axvline(x = x_j, linestyle='--',color=party.color,label = f'{party.code} Wins Election ({x_j})')
+                plt.axvline(
+                    x=x_j,
+                    linestyle='--',
+                    color=party.color,
+                    label=f'{party.code} Wins Election ({x_j})',
+                )
 
-        ax.axhline(y=0.5, color='gray', linestyle='--', linewidth=1, label='50% (to Win)')
+        ax.axhline(
+            y=0.5,
+            color='gray',
+            linestyle='--',
+            linewidth=1,
+            label='50% (to Win)',
+        )
 
         plt.legend()
         title = self.test_election.title
