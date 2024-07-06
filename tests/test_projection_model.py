@@ -42,7 +42,7 @@ class TestProjectionModel(unittest.TestCase):
         country_result = model.test_elections[0].country_result
         parties = country_result.party_to_votes.get_parties(0.1)
 
-        Y_hat = model.model.predict(model.X_test)
+        Y_hat = model.evaluate(model.X_test)
         print(model.X_test)
         print(model.Y_test)
         print(Y_hat)

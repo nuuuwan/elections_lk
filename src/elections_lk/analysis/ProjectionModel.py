@@ -1,4 +1,4 @@
-from functools import cached_property
+from functools import cache, cached_property
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
@@ -26,6 +26,38 @@ class ProjectionModel:
         self.y_pd_ids = y_pd_ids
 
         self.model = None
+
+
+    @cache
+    def get_weights(self) -> tuple[float]:
+        election = self.test_elections[-1]
+        total_electors = election.country_result.vote_summary.electors
+        total_valid = election.country_result.vote_summary.valid
+        x_total_electors = 0
+        x_total_valid = 0
+        for pd_id in self.x_pd_ids:
+            pd_result = election.get_result(pd_id)
+            vote_summary  = pd_result.vote_summary
+            x_total_electors += vote_summary.electors
+            x_total_valid += vote_summary.valid
+        
+        not_x_total_electors = 0 
+        not_x_total_valid = 0
+        for pd_id in self.y_minus_x_pd_ids:
+            pd_result = election.get_result(pd_id)
+            vote_summary  = pd_result.vote_summary
+            not_x_total_electors += vote_summary.electors
+
+        x_p_turnout2 = x_total_electors / total_electors
+        not_x_total_valid = not_x_total_electors * x_p_turnout2    
+
+        w_x = x_total_valid / total_valid
+        w_not_x = not_x_total_valid / total_valid
+        return w_x, w_not_x
+
+    @cached_property 
+    def y_minus_x_pd_ids(self) -> list[str]:
+        return list(set(self.y_pd_ids) - set(self.x_pd_ids))
 
     @staticmethod
     def get_z(elections, z_pd_ids: list[str]) -> np.ndarray:
@@ -59,7 +91,7 @@ class ProjectionModel:
 
     @cached_property
     def Y_train(self) -> np.ndarray:
-        return self.get_z(self.train_elections, self.y_pd_ids)
+        return self.get_z(self.train_elections, self.y_minus_x_pd_ids)
 
     @cached_property
     def X_test(self) -> np.ndarray:
@@ -67,7 +99,7 @@ class ProjectionModel:
 
     @cached_property
     def Y_test(self) -> np.ndarray:
-        return self.get_z(self.test_elections, self.y_pd_ids)
+        return self.get_z(self.test_elections, self.y_minus_x_pd_ids)
 
     @cached_property
     def m_x(self) -> int:
@@ -110,3 +142,19 @@ class ProjectionModel:
             p90=p90,
             p95=p95,
         )
+
+
+    def evaluate(self, X):
+        assert self.model is not None
+        Y_hat = self.model.predict(X)
+
+        w_x, w_not_x = self.get_weights()
+
+        Y_hat2 = []
+        for i, yi in enumerate(Y_hat):
+            yi = yi[0]
+            xi = X[i][0]
+            yi2 = xi * w_x + yi * w_not_x
+            Y_hat2.append(yi2)
+
+        return np.array(Y_hat2).reshape(len(Y_hat2), 1)
