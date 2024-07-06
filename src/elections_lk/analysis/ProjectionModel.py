@@ -147,14 +147,18 @@ class ProjectionModel:
     def evaluate(self, X):
         assert self.model is not None
         Y_hat = self.model.predict(X)
-
+        error = self.get_errors(self.model, self.X_train, self.Y_train)['p95']
         w_x, w_not_x = self.get_weights()
 
         Y_hat2 = []
         for i, yi in enumerate(Y_hat):
             yi = yi[0]
+            yi_min = yi - error
+            yi_max = yi + error
             xi = X[i][0]
             yi2 = xi * w_x + yi * w_not_x
-            Y_hat2.append(yi2)
+            yi2_min = xi * w_x + yi_min * w_not_x
+            yi2_max = xi * w_x + yi_max * w_not_x
+            Y_hat2.append([yi2, yi2_min, yi2_max])
 
-        return np.array(Y_hat2).reshape(len(Y_hat2), 1)
+        return np.array(Y_hat2).reshape(len(Y_hat2), 3)
