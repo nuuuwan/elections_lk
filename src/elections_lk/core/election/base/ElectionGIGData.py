@@ -20,7 +20,11 @@ class ElectionGIGData:
         results = []
         for row in self.gig_table.remote_data_list:
             entity_id = row['entity_id']
-            if not (entity_id.startswith('EC-') and len(entity_id) >= 6 and not entity_id.endswith('-')):
+            if not (
+                entity_id.startswith('EC-')
+                and len(entity_id) >= 6
+                and not entity_id.endswith('-')
+            ):
                 continue
             result = Result.from_dict(row)
             results.append(result)

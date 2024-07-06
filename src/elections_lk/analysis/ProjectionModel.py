@@ -80,13 +80,13 @@ class ProjectionModel:
                 zi = []
                 for pd_id in z_pd_ids:
                     result = election.get_result(pd_id)
-                    if result: 
-                        total_votes_for_party += result.party_to_votes.dict.get(
-                            party, 0
+                    if result:
+                        total_votes_for_party += (
+                            result.party_to_votes.dict.get(party, 0)
                         )
                         zij = result.party_to_votes.p_dict.get(party, 0)
                     else:
-                        zij  = 0
+                        zij = 0
                     zi.append(zij)
 
                 zij = total_votes_for_party / total_votes

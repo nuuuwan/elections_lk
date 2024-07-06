@@ -113,7 +113,7 @@ class ProjectionSeries:
                 i_result = n - minus_i_result - 1
                 outer_result = list(outer[i_result])
                 inner_other = (
-                    outer_result[:i_party] + outer_result[i_party + 1 :]
+                    outer_result[:i_party] + outer_result[i_party + 1:]
                 )
                 y_min_j = y_min[i_result]
                 x_j = x[i_result]
@@ -137,7 +137,7 @@ class ProjectionSeries:
                 i_result = n - minus_i_result - 1
                 outer_result = list(outer[i_result])
                 inner_other = (
-                    outer_result[:i_party] + outer_result[i_party + 1 :]
+                    outer_result[:i_party] + outer_result[i_party + 1:]
                 )
                 y_min_j = y_min[i_result]
                 x_j = x[i_result]
