@@ -11,4 +11,5 @@ class TestProjectionSeries(unittest.TestCase):
             test_elections=elections[-1:],
         )
         x = series.build()
-        self.assertEqual(len(x), 160 - ProjectionSeries.MIN_M)
+        n = len(elections[-1].results)
+        self.assertEqual(len(x), n - ProjectionSeries.MIN_M)

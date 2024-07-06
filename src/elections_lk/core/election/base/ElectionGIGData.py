@@ -1,8 +1,11 @@
 from functools import cache, cached_property
 
-from gig import Ent, EntType, GIGTable
+from gig import GIGTable
+from utils import Log
 
 from elections_lk.core.result import Result
+
+log = Log('ElectionGIGData')
 
 
 class ElectionGIGData:
@@ -13,30 +16,33 @@ class ElectionGIGData:
         )
 
     @cached_property
-    def pd_results(self) -> list[Result]:
-        pd_ents = Ent.list_from_type(EntType.PD)
-        pd_results = []
-        for pd_ent in pd_ents:
-            gig_table_row = pd_ent.gig(self.gig_table)
-            pd_result = Result.from_gig_table_row(gig_table_row)
-            pd_results.append(pd_result)
-
-        return pd_results
+    def results(self) -> list[Result]:
+        results = []
+        for row in self.gig_table.remote_data_list:
+            entity_id = row['entity_id']
+            if not (entity_id.startswith('EC-') and len(entity_id) >= 6 and not entity_id.endswith('-')):
+                continue
+            result = Result.from_dict(row)
+            results.append(result)
+        return results
 
     @cached_property
-    def pd_results_idx(self) -> dict[str, Result]:
-        return {pd_result.id: pd_result for pd_result in self.pd_results}
+    def results_idx(self) -> dict[str, Result]:
+        return {result.id: result for result in self.results}
 
     @cached_property
     def country_result(self):
-        return Result.from_list('LK', self.pd_results)
+        return Result.from_list('LK', self.results)
 
     @cached_property
     def pd_ids(self):
-        return list(self.pd_results_idx.keys())
+        return list(self.results_idx.keys())
 
     @cache
     def get_result(self, pd_id: str) -> Result:
         if pd_id == 'LK':
             return self.country_result
-        return self.pd_results_idx[pd_id]
+        if pd_id in self.results_idx:
+            return self.results_idx[pd_id]
+        log.error(f'No result found for {pd_id}')
+        return None

@@ -34,15 +34,19 @@ class ProjectionModel:
         x_total_electors = 0
         x_total_valid = 0
         for pd_id in self.x_pd_ids:
-            pd_result = election.get_result(pd_id)
-            vote_summary = pd_result.vote_summary
+            result = election.get_result(pd_id)
+            if not result:
+                continue
+            vote_summary = result.vote_summary
             x_total_electors += vote_summary.electors
             x_total_valid += vote_summary.valid
 
         not_x_total_electors = 0
         for pd_id in self.y_minus_x_pd_ids:
-            pd_result = election.get_result(pd_id)
-            not_x_total_electors += pd_result.vote_summary.electors
+            result = election.get_result(pd_id)
+            if not result:
+                continue
+            not_x_total_electors += result.vote_summary.electors
 
         x_p_turnout2 = x_total_valid / x_total_electors
         not_x_total_valid_est = not_x_total_electors * x_p_turnout2
@@ -66,19 +70,23 @@ class ProjectionModel:
 
             total_votes = 0
             for pd_id in z_pd_ids:
-                pd_result = election.get_result(pd_id)
-                total_votes += pd_result.vote_summary.valid
+                result = election.get_result(pd_id)
+                if not result:
+                    continue
+                total_votes += result.vote_summary.valid
 
             for party in parties:
                 total_votes_for_party = 0
                 zi = []
                 for pd_id in z_pd_ids:
-                    pd_result = election.get_result(pd_id)
-                    total_votes_for_party += (
-                        pd_result.party_to_votes.dict.get(party, 0)
-                    )
-
-                    zij = pd_result.party_to_votes.p_dict.get(party, 0)
+                    result = election.get_result(pd_id)
+                    if result: 
+                        total_votes_for_party += result.party_to_votes.dict.get(
+                            party, 0
+                        )
+                        zij = result.party_to_votes.p_dict.get(party, 0)
+                    else:
+                        zij  = 0
                     zi.append(zij)
 
                 zij = total_votes_for_party / total_votes

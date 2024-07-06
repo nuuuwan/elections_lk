@@ -12,14 +12,14 @@ class TestElectionGIGData(unittest.TestCase):
             'government-elections-presidential.regions-ec.2019',
         )
 
-    def test_pd_results(self):
-        pd_results = self.TEST_ELECTION.pd_results
-        self.assertEqual(len(pd_results), 160)
+    def test_results(self):
+        results = self.TEST_ELECTION.results
+        self.assertEqual(len(results), 182)
 
-        first_pd_result = pd_results[0]
-        self.assertEqual(first_pd_result.id, 'EC-01A')
+        first_result = results[0]
+        self.assertEqual(first_result.id, 'EC-01A')
 
-        vote_summary = first_pd_result.vote_summary
+        vote_summary = first_result.vote_summary
         self.assertEqual(vote_summary.electors, 93_705)
         self.assertEqual(vote_summary.polled, 73_998)
         self.assertEqual(vote_summary.valid, 72_643)
@@ -29,7 +29,7 @@ class TestElectionGIGData(unittest.TestCase):
         self.assertAlmostEqual(vote_summary.p_valid, 0.9817, places=4)
         self.assertAlmostEqual(vote_summary.p_rejected, 0.0183, places=4)
 
-        party_to_votes = first_pd_result.party_to_votes
+        party_to_votes = first_result.party_to_votes
         self.assertEqual(len(party_to_votes.idx), 35)
         self.assertEqual(party_to_votes.total, 72_643)
         self.assertEqual(party_to_votes.SLPP, 16_986)

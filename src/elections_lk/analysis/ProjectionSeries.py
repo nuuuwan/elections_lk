@@ -59,7 +59,8 @@ class ProjectionSeries:
         plt.close()
         fig, ax = plt.subplots()
         ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1))
-        ax.set_xlim([0, 160])
+        n_results = len(self.test_election.results)
+        ax.set_xlim([0, n_results])
         ax.set_ylim([0.35, 0.65])
 
         def get_label(xi):
@@ -112,7 +113,7 @@ class ProjectionSeries:
                 i_result = n - minus_i_result - 1
                 outer_result = list(outer[i_result])
                 inner_other = (
-                    outer_result[:i_party] + outer_result[i_party + 1:]
+                    outer_result[:i_party] + outer_result[i_party + 1 :]
                 )
                 y_min_j = y_min[i_result]
                 x_j = x[i_result]
@@ -126,7 +127,7 @@ class ProjectionSeries:
                     x=x_j,
                     linestyle=':',
                     color=party.color,
-                    label=f'{party.code} Wins 1st Prefs. ({x_j})',
+                    label=f'{party.code} Wins 1st Prefs. ({x_j}/{n_results})',
                 )
 
             x_j = None
@@ -136,7 +137,7 @@ class ProjectionSeries:
                 i_result = n - minus_i_result - 1
                 outer_result = list(outer[i_result])
                 inner_other = (
-                    outer_result[:i_party] + outer_result[i_party + 1:]
+                    outer_result[:i_party] + outer_result[i_party + 1 :]
                 )
                 y_min_j = y_min[i_result]
                 x_j = x[i_result]
@@ -150,7 +151,7 @@ class ProjectionSeries:
                     x=x_j,
                     linestyle='--',
                     color=party.color,
-                    label=f'{party.code} Wins Election ({x_j})',
+                    label=f'{party.code} Wins Election ({x_j}/{n_results})',
                 )
 
         ax.axhline(

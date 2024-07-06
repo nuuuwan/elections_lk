@@ -13,9 +13,9 @@ class VoteSummary:
     FIELDS = ['electors', 'polled', 'valid', 'rejected']
 
     @classmethod
-    def from_gig_table_row(cls, gig_table_row) -> 'VoteSummary':
+    def from_dict(cls, d) -> 'VoteSummary':
         [electors, polled, valid, rejected] = [
-            Votes.parse(gig_table_row.dict[field]) for field in cls.FIELDS
+            Votes.parse(d[field]) for field in cls.FIELDS
         ]
 
         # assert electors >= 0

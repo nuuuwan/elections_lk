@@ -17,8 +17,8 @@ class Similarity:
         year_party_set = set()
         for election in ElectionPresidential.list_all():
             year = election.year
-            for pd_result in election.pd_results:
-                for party in pd_result.party_to_votes.get_parties():
+            for result in election.results:
+                for party in result.party_to_votes.get_parties():
                     year_party_set.add(f'{year}_{party}')
         return list(sorted(year_party_set))
 
@@ -26,8 +26,8 @@ class Similarity:
     def pd_id_list(self) -> list:
         pd_id_set = set()
         for election in ElectionPresidential.list_all():
-            for pd_result in election.pd_results:
-                pd_id_set.add(pd_result.id)
+            for result in election.results:
+                pd_id_set.add(result.id)
         return list(sorted(pd_id_set))
 
     @cached_property
@@ -36,11 +36,11 @@ class Similarity:
 
         for election in ElectionPresidential.list_all():
             year = election.year
-            for pd_result in election.pd_results:
-                pd_id = pd_result.id
+            for result in election.results:
+                pd_id = result.id
                 if pd_id not in idx:
                     idx[pd_id] = {}
-                for party, p_votes in pd_result.party_to_votes.p_items():
+                for party, p_votes in result.party_to_votes.p_items():
                     year_party = f'{year}_{party}'
 
                     idx[pd_id][year_party] = p_votes

@@ -1,6 +1,7 @@
 from elections_lk.core.election.base.Election import Election
-from elections_lk.core.election.categories.ElectionCategory import \
-    ElectionCategory
+from elections_lk.core.election.categories.ElectionCategory import (
+    ElectionCategory,
+)
 
 
 class ElectionPresidential(Election):

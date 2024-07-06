@@ -20,10 +20,10 @@ class PartyToVotes:
         return cls(sorted_idx)
 
     @classmethod
-    def from_gig_table_row(cls, gig_table_row) -> 'PartyToVotes':
+    def from_dict(cls, d) -> 'PartyToVotes':
         idx = {}
-        for k, v in gig_table_row.dict.items():
-            if k not in ['id'] + VoteSummary.FIELDS:
+        for k, v in d.items():
+            if k not in ['entity_id'] + VoteSummary.FIELDS:
                 idx[k] = Votes.parse(v)
         return cls.from_idx(idx)
 

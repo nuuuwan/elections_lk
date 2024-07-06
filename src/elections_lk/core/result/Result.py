@@ -11,11 +11,11 @@ class Result:
     party_to_votes: PartyToVotes
 
     @classmethod
-    def from_gig_table_row(cls, gig_table_row) -> 'Result':
+    def from_dict(cls, d) -> 'Result':
         return cls(
-            id=gig_table_row.id,
-            party_to_votes=PartyToVotes.from_gig_table_row(gig_table_row),
-            vote_summary=VoteSummary.from_gig_table_row(gig_table_row),
+            id=d['entity_id'],
+            party_to_votes=PartyToVotes.from_dict(d),
+            vote_summary=VoteSummary.from_dict(d),
         )
 
     @classmethod

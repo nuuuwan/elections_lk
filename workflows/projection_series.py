@@ -11,7 +11,7 @@ def main():
     for i in range(1, n):
         series = ProjectionSeries(
             train_elections=elections[:i],
-            test_elections=elections[i: i + 1],
+            test_elections=elections[i : i + 1],
         )
         series.build()
 
