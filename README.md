@@ -2,6 +2,14 @@
 
 Python Library for Sri Lankan Elections Data.
 
+## Install
+
+```
+pip install elections_lk-nuuuwan
+```
+
+## Example Usage
+
 ```python
 from elections_lk import ElectionPresidential
 
