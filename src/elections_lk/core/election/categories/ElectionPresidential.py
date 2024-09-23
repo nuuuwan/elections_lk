@@ -18,6 +18,7 @@ class ElectionPresidential(Election):
             '2010',
             '2015',
             '2019',
+            '2024',
         ]
 
     @staticmethod
