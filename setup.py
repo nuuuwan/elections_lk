@@ -3,7 +3,7 @@
 import setuptools
 
 DIST_NAME = 'elections_lk'
-VERSION = "1.0.0"
+VERSION = "3.0.0"
 DESCRIPTION = "Python Library for Sri Lankan Elections Data."
 INSTALL_REQUIRES = [
     'utils-nuuuwan',
