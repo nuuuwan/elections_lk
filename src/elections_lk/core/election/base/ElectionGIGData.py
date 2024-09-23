@@ -1,3 +1,4 @@
+import time
 from functools import cache, cached_property
 
 from gig import GIGTable
@@ -16,9 +17,22 @@ class ElectionGIGData:
         )
 
     @cached_property
+    def remote_data_list(self):
+        t = 1
+        while True:
+            try:
+                remote_data_list = self.gig_table.remote_data_list
+                if remote_data_list:
+                    return remote_data_list
+            except BaseException:
+                log.error('Retrying...')
+                time.sleep(t)
+                t *= 2
+
+    @cached_property
     def results(self) -> list[Result]:
         results = []
-        for row in self.gig_table.remote_data_list:
+        for row in self.remote_data_list:
             entity_id = row['entity_id']
             if not (
                 entity_id.startswith('EC-')
