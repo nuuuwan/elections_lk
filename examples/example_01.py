@@ -11,4 +11,3 @@ for result in latest_election.results[:10]:
 borella_result = latest_election.get_result('EC-01C')
 print(borella_result.vote_summary)
 print(borella_result.party_to_votes)
-

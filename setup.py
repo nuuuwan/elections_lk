@@ -2,16 +2,12 @@
 
 import setuptools
 
-DIST_NAME = 'utils'
-VERSION = "2.0.11"
-DESCRIPTION = "Utilities, complementing the Python Standard Library"
+DIST_NAME = 'elections_lk'
+VERSION = "1.0.0"
+DESCRIPTION = "Python Library for Sri Lankan Elections Data."
 INSTALL_REQUIRES = [
-    'utils_ai-nuuuwan',
-    'utils_base-nuuuwan',
-    'utils_git-nuuuwan',
-    'utils_lang-nuuuwan',
-    'utils_twitter-nuuuwan',
-    'utils_www-nuuuwan',
+    'utils-nuuuwan',
+    'gig-nuuuwan',
 ]
 setuptools.setup(
     name="%s-nuuuwan" % DIST_NAME,
