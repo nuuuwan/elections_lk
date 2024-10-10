@@ -6,4 +6,5 @@ from elections_lk.core.election import (Election, ElectionBase,
                                         ElectionPresidential)
 from elections_lk.core.Party import Party
 from elections_lk.core.result import PartyToVotes, Result, VoteSummary
+from elections_lk.core.Seats import Seats
 from elections_lk.core.Votes import Votes

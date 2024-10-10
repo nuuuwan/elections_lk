@@ -25,6 +25,7 @@ class PartyToVotes:
         for k, v in d.items():
             if k not in ['entity_id'] + VoteSummary.FIELDS:
                 idx[k] = Votes.parse(v)
+        idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
         return cls.from_idx(idx)
 
     @classmethod
@@ -38,29 +39,26 @@ class PartyToVotes:
     def __getattr__(self, key: str) -> int:
         return self.idx[key]
 
+    def __getitem__(self, key: str) -> int:
+        return self.idx[key]
+
+    def items(self):
+        return self.idx.items()
+
+    def keys(self):
+        return self.idx.keys()
+
+    def values(self):
+        return self.idx.values()
+
     @cached_property
     def total(self) -> int:
         return sum(self.idx.values())
 
     @cache
-    def get_p(self, key: str) -> int:
+    def p(self, key: str) -> int:
         return self.idx[key] / self.total
 
-    def items(self):
-        return self.idx.items()
-
-    @cache
-    def p_items(self):
-        return [(k, v / self.total) for k, v in self.idx.items()]
-
     @cached_property
-    def p_dict(self):
-        return dict(self.p_items())
-
-    @cached_property
-    def dict(self):
-        return self.idx
-
-    @cache
-    def get_parties(self, min_p_votes: float = 0) -> list[str]:
-        return [k for k, v in self.p_items() if v >= min_p_votes]
+    def winning_party_id(self) -> str:
+        return next(iter(self.idx.keys()))

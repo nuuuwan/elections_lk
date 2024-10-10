@@ -30,7 +30,7 @@ class ElectionGIGData:
                 t *= 2
 
     @cached_property
-    def results(self) -> list[Result]:
+    def pd_results(self) -> list[Result]:
         results = []
         for row in self.remote_data_list:
             entity_id = row['entity_id']
@@ -45,22 +45,42 @@ class ElectionGIGData:
         return results
 
     @cached_property
-    def results_idx(self) -> dict[str, Result]:
-        return {result.id: result for result in self.results}
+    def pd_results_idx(self) -> dict[str, Result]:
+        return {result.id: result for result in self.pd_results}
 
     @cached_property
-    def country_result(self):
-        return Result.from_list('LK', self.results)
+    def ed_results_idx(self) -> dict[str, Result]:
+        ed_to_pd_results = {}
+        for pd_result in self.pd_results:
+            ed_id = pd_result.id[:5]
+            if ed_id not in ed_to_pd_results:
+                ed_to_pd_results[ed_id] = []
+            ed_to_pd_results[ed_id].append(pd_result)
+
+        return {
+            ed_id: Result.from_list('ED', pd_results)
+            for ed_id, pd_results in ed_to_pd_results.items()
+        }
+
+    @cached_property
+    def lk_result(self):
+        return Result.from_list('LK', self.pd_results)
 
     @cached_property
     def pd_ids(self):
-        return list(self.results_idx.keys())
+        return list(self.pd_results_idx.keys())
 
     @cache
-    def get_result(self, pd_id: str) -> Result:
-        if pd_id == 'LK':
-            return self.country_result
-        if pd_id in self.results_idx:
-            return self.results_idx[pd_id]
-        log.error(f'No result found for {pd_id}')
-        return None
+    def get_result(self, id: str) -> Result:
+        if id in self.pd_results_idx:
+            return self.pd_results_idx[id]
+        if id in self.ed_results_idx:
+            return self.ed_results_idx[id]
+        if id == 'LK':
+            return self.lk_result
+
+        raise Exception(f'No result found for {id}')
+
+    @cached_property
+    def winning_party_id(self) -> str:
+        return self.lk_result.winning_party_id

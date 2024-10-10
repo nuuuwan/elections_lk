@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from functools import cached_property
 
 from elections_lk.core.result.PartyToVotes import PartyToVotes
 from elections_lk.core.result.VoteSummary import VoteSummary
@@ -29,3 +30,7 @@ class Result:
                 [result.vote_summary for result in results_list]
             ),
         )
+
+    @cached_property
+    def winning_party_id(self) -> str:
+        return self.party_to_votes.winning_party_id

@@ -1,6 +1,10 @@
+from functools import cached_property
+
+from elections_lk.constants import YEAR_TO_REGION_TO_SEATS
 from elections_lk.core.election.base.Election import Election
 from elections_lk.core.election.categories.ElectionCategory import \
     ElectionCategory
+from elections_lk.core.Seats import Seats
 
 
 class ElectionParliamentary(Election):
@@ -27,7 +31,20 @@ class ElectionParliamentary(Election):
             for year in ElectionParliamentary.get_years()
         ]
 
+    @cached_property
+    def region_to_seats(self) -> dict[str, Seats]:
+        return YEAR_TO_REGION_TO_SEATS[self.year]
 
-if __name__ == '__main__':
-    for election in ElectionParliamentary.list_all():
-        print(election.year, election.results[0])
+    @cached_property
+    def region_to_party_to_seats(self) -> dict[str, dict[str, int]]:
+        return {
+            region_id: Seats.get_party_to_seats(
+                region_id, n_seats, self.get_result(region_id).party_to_votes
+            )
+            for region_id, n_seats in self.region_to_seats.items()
+        }
+
+    @cached_property
+    def cum_party_to_seats(self) -> dict[str, int]:
+        unsorted = Seats.concat(*self.region_to_party_to_seats.values())
+        return Seats.sort(unsorted, self.get_result('LK').party_to_votes)

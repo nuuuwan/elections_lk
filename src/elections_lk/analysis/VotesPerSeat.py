@@ -1,0 +1,2 @@
+class VotesPerSeat:
+    pass
