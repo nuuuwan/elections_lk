@@ -51,7 +51,7 @@ class Seats:
         party_to_rem_seats: dict[str, float], n_seats_rem: int
     ) -> dict[str, int]:
         party_to_seats_rem = {}
-        for party, rem_seats in sorted(
+        for party, _ in sorted(
             party_to_rem_seats.items(), key=lambda x: x[1], reverse=True
         )[:n_seats_rem]:
             if party not in party_to_seats_rem:

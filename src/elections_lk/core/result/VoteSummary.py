@@ -18,13 +18,18 @@ class VoteSummary:
             Votes.parse(d[field]) for field in cls.FIELDS
         ]
 
-        # assert electors >= 0
-        # assert polled >= 0
-        # assert valid >= 0
-        # assert rejected >= 0
+        assert electors >= 0
+        assert polled >= 0
+        assert valid >= 0
+        assert rejected >= 0
 
-        # assert electors >= polled
-        # assert polled == valid + rejected
+        if electors < polled:  # HACK!
+            electors = polled
+            assert electors >= 0
+
+        if polled != valid + rejected:  # HACK!
+            rejected = polled - valid
+            assert rejected >= 0
 
         return cls(electors, polled, valid, rejected)
 
