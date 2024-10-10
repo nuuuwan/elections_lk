@@ -66,10 +66,6 @@ class ElectionGIGData:
     def lk_result(self):
         return Result.from_list('LK', self.pd_results)
 
-    @cached_property
-    def pd_ids(self):
-        return list(self.pd_results_idx.keys())
-
     @cache
     def get_result(self, id: str) -> Result:
         if id in self.pd_results_idx:
