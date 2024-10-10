@@ -1,6 +1,6 @@
 # elections_lk (auto generate by build_inits.py)
 
-from elections_lk.analysis import VotesPerSeat
+from elections_lk.analysis import SeatAllocation
 from elections_lk.constants import YEAR_TO_REGION_TO_SEATS
 from elections_lk.core import (Election, ElectionBase, ElectionCategory,
                                ElectionGIGData, ElectionParliamentary,
