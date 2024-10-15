@@ -58,7 +58,7 @@ class ElectionGIGData:
             ed_to_pd_results[ed_id].append(pd_result)
 
         return {
-            ed_id: Result.from_list('ED', pd_results)
+            ed_id: Result.from_list(ed_id, pd_results)
             for ed_id, pd_results in ed_to_pd_results.items()
         }
 
