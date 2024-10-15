@@ -16,6 +16,7 @@ class SeatAllocation:
         n_seats = sum(party_to_seats.values())
         total_votes = sum(party_to_votes.values())
         non_other_votes = 0
+        non_eliminated_votes = 0
 
         # replay
         n_seats_bonus = Seats.get_n_seats_bonus(region_id)
@@ -59,6 +60,8 @@ class SeatAllocation:
             p_votes = votes / total_votes
             if seats == 0 and p_votes < min(0.1 / n_seats, 0.01):
                 continue
+            if votes > votes_limit:
+                non_eliminated_votes += votes
             seats_f_true = n_seats * votes / total_votes
             d_seats = seats - seats_f_true
             votes_per_seat = f'{votes / seats:,.0f}' if seats > 0 else '∞'
@@ -92,12 +95,21 @@ class SeatAllocation:
             '\t\t',
             "Others".rjust(8),
             f'{other_votes:,}'.rjust(10),
-            f'{p_votes:.1%}'.rjust(6),
+            f'{p_votes:.2%}'.rjust(6),
             'x'.rjust(2),
             '∞'.rjust(10),
             '0'.rjust(6),
-            f'({seats_f_true:.1f})'.rjust(8),
-            f'{-seats_f_true:.1f}'.rjust(6),
+            f'({seats_f_true:.2f})'.rjust(8),
+            f'{-seats_f_true:.2f}'.rjust(6),
+        )
+
+        p_non_eliminated = non_eliminated_votes / total_votes
+        p_eliminated = 1 - p_non_eliminated
+        print('\t\t', '-' * 32)
+        print(
+            '\t\t',
+            "Eliminated".rjust(8),
+            f'{p_eliminated:.1%}'.rjust(6),
         )
 
     def analyze_election(self, election: ElectionParliamentary):
@@ -112,10 +124,10 @@ class SeatAllocation:
             )
 
     def analyze(self):
-        elections = ElectionParliamentary.list_all()[-1:]
+        elections = ElectionParliamentary.list_all()[-2:-1]
         for election in elections:
             self.analyze_election(election)
 
 
 if __name__ == "__main__":
-    VotesPerSeat().analyze()
+    SeatAllocation().analyze()
