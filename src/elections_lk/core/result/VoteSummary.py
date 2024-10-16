@@ -10,43 +10,22 @@ class VoteSummary:
     valid: int
     rejected: int
 
-    FIELDS = ['electors', 'polled', 'valid', 'rejected']
+    FIELDS = ["electors", "polled", "valid", "rejected"]
 
     @classmethod
-    def from_dict(cls, d) -> 'VoteSummary':
+    def from_dict(cls, d) -> "VoteSummary":
         [electors, polled, valid, rejected] = [
             Votes.parse(d[field]) for field in cls.FIELDS
         ]
 
-        assert electors >= 0
-        assert polled >= 0
-        assert valid >= 0
-        assert rejected >= 0
-
-        if electors < polled:  # HACK!
-            electors = polled
-            assert electors >= 0
-
-        if polled != valid + rejected:  # HACK!
-            rejected = polled - valid
-            assert rejected >= 0
-
         return cls(electors, polled, valid, rejected)
 
     @classmethod
-    def from_list(cls, vote_summary_list) -> 'VoteSummary':
-        electors = sum(
-            [vote_summary.electors for vote_summary in vote_summary_list]
-        )
-        polled = sum(
-            [vote_summary.polled for vote_summary in vote_summary_list]
-        )
-        valid = sum(
-            [vote_summary.valid for vote_summary in vote_summary_list]
-        )
-        rejected = sum(
-            [vote_summary.rejected for vote_summary in vote_summary_list]
-        )
+    def from_list(cls, vote_summary_list) -> "VoteSummary":
+        electors = sum([vote_summary.electors for vote_summary in vote_summary_list])
+        polled = sum([vote_summary.polled for vote_summary in vote_summary_list])
+        valid = sum([vote_summary.valid for vote_summary in vote_summary_list])
+        rejected = sum([vote_summary.rejected for vote_summary in vote_summary_list])
 
         return cls(electors, polled, valid, rejected)
 
