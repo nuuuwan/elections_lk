@@ -2,12 +2,12 @@
 
 import setuptools
 
-DIST_NAME = 'elections_lk'
-VERSION = "3.0.3"
+DIST_NAME = "elections_lk"
+VERSION = "3.0.4"
 DESCRIPTION = "Python Library for Sri Lankan Elections Data."
 INSTALL_REQUIRES = [
-    'utils-nuuuwan',
-    'gig-nuuuwan',
+    "utils-nuuuwan",
+    "gig-nuuuwan",
 ]
 setuptools.setup(
     name="%s-nuuuwan" % DIST_NAME,
@@ -30,6 +30,6 @@ setuptools.setup(
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.10",
     install_requires=INSTALL_REQUIRES,
-    test_suite='nose.collector',
-    tests_require=['nose'],
+    test_suite="nose.collector",
+    tests_require=["nose"],
 )
