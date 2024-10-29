@@ -14,22 +14,20 @@ class PartyToVotes:
 
     @classmethod
     def from_idx(cls, idx):
-        sorted_idx = dict(
-            sorted(idx.items(), key=lambda x: x[1], reverse=True)
-        )
+        sorted_idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
         return cls(sorted_idx)
 
     @classmethod
-    def from_dict(cls, d) -> 'PartyToVotes':
+    def from_dict(cls, d) -> "PartyToVotes":
         idx = {}
         for k, v in d.items():
-            if k not in ['entity_id'] + VoteSummary.FIELDS:
+            if k not in ["entity_id"] + VoteSummary.FIELDS:
                 idx[k] = Votes.parse(v)
         idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
         return cls.from_idx(idx)
 
     @classmethod
-    def from_list(cls, party_to_votes_list) -> 'PartyToVotes':
+    def from_list(cls, party_to_votes_list) -> "PartyToVotes":
         idx = {}
         for party_to_votes in party_to_votes_list:
             for party, votes in party_to_votes.items():
@@ -57,6 +55,8 @@ class PartyToVotes:
 
     @cache
     def p(self, key: str) -> int:
+        if key not in self.idx:
+            return 0
         return self.idx[key] / self.total
 
     @cached_property
