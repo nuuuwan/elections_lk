@@ -14,7 +14,9 @@ class PartyToVotes:
 
     @classmethod
     def from_idx(cls, idx):
-        sorted_idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
+        sorted_idx = dict(
+            sorted(idx.items(), key=lambda x: x[1], reverse=True)
+        )
         return cls(sorted_idx)
 
     @classmethod

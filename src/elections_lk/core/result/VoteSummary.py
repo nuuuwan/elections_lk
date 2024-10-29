@@ -22,10 +22,18 @@ class VoteSummary:
 
     @classmethod
     def from_list(cls, vote_summary_list) -> "VoteSummary":
-        electors = sum([vote_summary.electors for vote_summary in vote_summary_list])
-        polled = sum([vote_summary.polled for vote_summary in vote_summary_list])
-        valid = sum([vote_summary.valid for vote_summary in vote_summary_list])
-        rejected = sum([vote_summary.rejected for vote_summary in vote_summary_list])
+        electors = sum(
+            [vote_summary.electors for vote_summary in vote_summary_list]
+        )
+        polled = sum(
+            [vote_summary.polled for vote_summary in vote_summary_list]
+        )
+        valid = sum(
+            [vote_summary.valid for vote_summary in vote_summary_list]
+        )
+        rejected = sum(
+            [vote_summary.rejected for vote_summary in vote_summary_list]
+        )
 
         return cls(electors, polled, valid, rejected)
 
