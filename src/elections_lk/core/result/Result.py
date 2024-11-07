@@ -33,6 +33,7 @@ class Result:
 
     def to_dict(self):
         d = {
+            # entity
             "entity_id": self.id,
             # vote_summary
             "electors": self.vote_summary.electors,
