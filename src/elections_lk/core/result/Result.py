@@ -12,15 +12,15 @@ class Result:
     party_to_votes: PartyToVotes
 
     @classmethod
-    def from_dict(cls, d) -> 'Result':
+    def from_dict(cls, d) -> "Result":
         return cls(
-            id=d['entity_id'],
+            id=d["entity_id"],
             party_to_votes=PartyToVotes.from_dict(d),
             vote_summary=VoteSummary.from_dict(d),
         )
 
     @classmethod
-    def from_list(cls, id, results_list) -> 'Result':
+    def from_list(cls, id, results_list) -> "Result":
         return cls(
             id=id,
             party_to_votes=PartyToVotes.from_list(
@@ -30,6 +30,20 @@ class Result:
                 [result.vote_summary for result in results_list]
             ),
         )
+
+    def to_dict(self):
+        d = {
+            "entity_id": self.id,
+            # vote_summary
+            "electors": self.vote_summary.electors,
+            "polled": self.vote_summary.polled,
+            "valid": self.vote_summary.valid,
+            "rejected": self.vote_summary.rejected,
+        }
+        # party_to_votes
+        for party, votes in self.party_to_votes.idx.items():
+            d[party] = votes
+        return d
 
     @cached_property
     def winning_party_id(self) -> str:

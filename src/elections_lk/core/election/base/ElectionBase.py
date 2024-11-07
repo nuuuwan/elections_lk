@@ -12,4 +12,8 @@ class ElectionBase:
 
     @cached_property
     def title(self) -> str:
-        return f'{self.year} {self.category.title()}'
+        return f"{self.year} {self.category.title()}"
+
+    @cached_property
+    def to_d_list(self):
+        return [pd_result.to_dict(pd_result) for pd_result in self.pd_results]
