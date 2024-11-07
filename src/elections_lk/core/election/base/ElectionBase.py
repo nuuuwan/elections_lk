@@ -15,5 +15,5 @@ class ElectionBase:
         return f"{self.year} {self.category.title()}"
 
     @cached_property
-    def to_d_list(self):
+    def d_list(self):
         return [pd_result.to_dict() for pd_result in self.pd_results]
