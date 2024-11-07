@@ -16,4 +16,4 @@ class ElectionBase:
 
     @cached_property
     def to_d_list(self):
-        return [pd_result.to_dict(pd_result) for pd_result in self.pd_results]
+        return [pd_result.to_dict() for pd_result in self.pd_results]
