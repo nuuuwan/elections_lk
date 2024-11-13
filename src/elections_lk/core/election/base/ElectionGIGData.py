@@ -6,14 +6,14 @@ from utils import Log
 
 from elections_lk.core.result import Result
 
-log = Log('ElectionGIGData')
+log = Log("ElectionGIGData")
 
 
 class ElectionGIGData:
     @property
     def gig_table(self) -> GIGTable:
         return GIGTable(
-            f'government-elections-{self.category}', 'regions-ec', self.year
+            f"government-elections-{self.category}", "regions-ec", self.year
         )
 
     @cached_property
@@ -25,7 +25,7 @@ class ElectionGIGData:
                 if remote_data_list:
                     return remote_data_list
             except BaseException:
-                log.error('Retrying...')
+                log.error("Retrying...")
                 time.sleep(t)
                 t *= 2
 
@@ -33,11 +33,11 @@ class ElectionGIGData:
     def pd_results(self) -> list[Result]:
         results = []
         for row in self.remote_data_list:
-            entity_id = row['entity_id']
+            entity_id = row["entity_id"]
             if not (
-                entity_id.startswith('EC-')
+                entity_id.startswith("EC-")
                 and len(entity_id) >= 6
-                and not entity_id.endswith('-')
+                and not entity_id.endswith("-")
             ):
                 continue
             result = Result.from_dict(row)
@@ -64,7 +64,7 @@ class ElectionGIGData:
 
     @cached_property
     def lk_result(self):
-        return Result.from_list('LK', self.pd_results)
+        return Result.from_list("LK", self.pd_results)
 
     @cache
     def get_result(self, id: str) -> Result:
@@ -72,10 +72,10 @@ class ElectionGIGData:
             return self.pd_results_idx[id]
         if id in self.ed_results_idx:
             return self.ed_results_idx[id]
-        if id == 'LK':
+        if id == "LK":
             return self.lk_result
 
-        raise Exception(f'No result found for {id}')
+        return None
 
     @cached_property
     def winning_party_id(self) -> str:
