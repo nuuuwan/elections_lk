@@ -14,9 +14,7 @@ class PartyToVotes:
 
     @classmethod
     def from_idx(cls, idx):
-        sorted_idx = dict(
-            sorted(idx.items(), key=lambda x: x[1], reverse=True)
-        )
+        sorted_idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
         return cls(sorted_idx)
 
     @classmethod
@@ -64,3 +62,14 @@ class PartyToVotes:
     @cached_property
     def winning_party_id(self) -> str:
         return next(iter(self.idx.keys()))
+
+    @cache
+    def get_party_to_votes_othered(self, threshold: float) -> "PartyToVotes":
+        idx = {}
+        total = self.total
+        for party, votes in self.idx.items():
+            if votes / total >= threshold:
+                idx[party] = votes
+            else:
+                idx["other"] = idx.get("other", 0) + votes
+        return PartyToVotes.from_idx(idx)
