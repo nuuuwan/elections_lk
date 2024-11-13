@@ -1,0 +1,129 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" width="900" height="900" font-family="BahnSchrift">
+  <rect x="0" y="0" width="1" height="1" fill="white" stroke="black" stroke-width="0.01"/>
+  <g>
+    <text x="0.02" y="0.15714285714285714" fill="black" font-size="0.03" dominant-baseline="middle">2020</text>
+    <g>
+      <rect x="0.1" y="0.1" width="0.3314039094744228" height="0.1142857142857143" fill="#008" stroke="white" stroke-width="0.001"/>
+      <text x="0.10500000000000001" y="0.15714285714285714" fill="white" font-size="0.04142548868430285" dominant-baseline="middle">41% SLPP</text>
+    </g>
+    <g>
+      <rect x="0.43140390947442275" y="0.1" width="0.23914430714307994" height="0.1142857142857143" fill="#880" stroke="white" stroke-width="0.001"/>
+      <text x="0.43640390947442276" y="0.15714285714285714" fill="white" font-size="0.029893038392884992" dominant-baseline="middle">30% DNV</text>
+    </g>
+    <g>
+      <rect x="0.6705482166175027" y="0.1" width="0.13403669154725026" height="0.1142857142857143" fill="#080" stroke="white" stroke-width="0.001"/>
+      <text x="0.6755482166175028" y="0.15714285714285714" fill="white" font-size="0.016754586443406282" dominant-baseline="middle">17% SJB</text>
+    </g>
+    <g>
+      <rect x="0.804584908164753" y="0.1" width="0.09541509183524707" height="0.1142857142857143" fill="#888" stroke="white" stroke-width="0.001"/>
+      <text x="0.809584908164753" y="0.15714285714285714" fill="white" font-size="0.011926886479405884" dominant-baseline="middle">12% OTHER</text>
+    </g>
+    <text x="0.02" y="0.27142857142857146" fill="black" font-size="0.03" dominant-baseline="middle">2015</text>
+    <g>
+      <rect x="0.1" y="0.2142857142857143" width="0.26146411677264947" height="0.1142857142857143" fill="#080" stroke="white" stroke-width="0.001"/>
+      <text x="0.10500000000000001" y="0.27142857142857146" fill="white" font-size="0.032683014596581184" dominant-baseline="middle">33% UNP</text>
+    </g>
+    <g>
+      <rect x="0.36146411677264945" y="0.2142857142857143" width="0.24268331008820587" height="0.1142857142857143" fill="#008" stroke="white" stroke-width="0.001"/>
+      <text x="0.36646411677264945" y="0.27142857142857146" fill="white" font-size="0.030335413761025734" dominant-baseline="middle">30% UPFA</text>
+    </g>
+    <g>
+      <rect x="0.6041474268608553" y="0.2142857142857143" width="0.2287418485815024" height="0.1142857142857143" fill="#880" stroke="white" stroke-width="0.001"/>
+      <text x="0.6091474268608553" y="0.27142857142857146" fill="white" font-size="0.0285927310726878" dominant-baseline="middle">29% DNV</text>
+    </g>
+    <g>
+      <rect x="0.8328892754423578" y="0.2142857142857143" width="0.06640472391756001" height="0.1142857142857143" fill="#888" stroke="white" stroke-width="0.001"/>
+      <text x="0.8378892754423578" y="0.27142857142857146" fill="white" font-size="0.008300590489695002" dominant-baseline="middle">8% OTHER</text>
+    </g>
+    <text x="0.02" y="0.3857142857142858" fill="black" font-size="0.03" dominant-baseline="middle">2010</text>
+    <g>
+      <rect x="0.1" y="0.3285714285714286" width="0.3585637639744367" height="0.1142857142857143" fill="#880" stroke="white" stroke-width="0.001"/>
+      <text x="0.10500000000000001" y="0.3857142857142858" fill="white" font-size="0.044820470496804585" dominant-baseline="middle">45% DNV</text>
+    </g>
+    <g>
+      <rect x="0.45856376397443666" y="0.3285714285714286" width="0.2665424456305395" height="0.1142857142857143" fill="#008" stroke="white" stroke-width="0.001"/>
+      <text x="0.46356376397443666" y="0.3857142857142858" fill="white" font-size="0.03331780570381744" dominant-baseline="middle">33% UPFA</text>
+    </g>
+    <g>
+      <rect x="0.7251062096049762" y="0.3285714285714286" width="0.12967344445860704" height="0.1142857142857143" fill="#080" stroke="white" stroke-width="0.001"/>
+      <text x="0.7301062096049762" y="0.3857142857142858" fill="white" font-size="0.01620918055732588" dominant-baseline="middle">16% UNP</text>
+    </g>
+    <g>
+      <rect x="0.8547796540635831" y="0.3285714285714286" width="0.04451414604423435" height="0.1142857142857143" fill="#888" stroke="white" stroke-width="0.001"/>
+      <text x="0.8597796540635831" y="0.3857142857142858" fill="white" font-size="0.005564268255529294" dominant-baseline="middle">6% OTHER</text>
+    </g>
+    <text x="0.02" y="0.5" fill="black" font-size="0.03" dominant-baseline="middle">2004</text>
+    <g>
+      <rect x="0.1" y="0.44285714285714284" width="0.25632929106777796" height="0.1142857142857143" fill="#008" stroke="white" stroke-width="0.001"/>
+      <text x="0.10500000000000001" y="0.5" fill="white" font-size="0.032041161383472246" dominant-baseline="middle">32% UPFA</text>
+    </g>
+    <g>
+      <rect x="0.356329291067778" y="0.44285714285714284" width="0.23925267339968734" height="0.1142857142857143" fill="#880" stroke="white" stroke-width="0.001"/>
+      <text x="0.361329291067778" y="0.5" fill="white" font-size="0.029906584174960917" dominant-baseline="middle">30% DNV</text>
+    </g>
+    <g>
+      <rect x="0.5955819644674654" y="0.44285714285714284" width="0.2116363379782653" height="0.1142857142857143" fill="#080" stroke="white" stroke-width="0.001"/>
+      <text x="0.6005819644674654" y="0.5" fill="white" font-size="0.026454542247283164" dominant-baseline="middle">26% UNP</text>
+    </g>
+    <g>
+      <rect x="0.8072183024457307" y="0.44285714285714284" width="0.09277453535822172" height="0.1142857142857143" fill="#888" stroke="white" stroke-width="0.001"/>
+      <text x="0.8122183024457307" y="0.5" fill="white" font-size="0.011596816919777715" dominant-baseline="middle">12% OTHER</text>
+    </g>
+    <text x="0.02" y="0.6142857142857143" fill="black" font-size="0.03" dominant-baseline="middle">2001</text>
+    <g>
+      <rect x="0.1" y="0.5571428571428572" width="0.2576863734568327" height="0.1142857142857143" fill="#080" stroke="white" stroke-width="0.001"/>
+      <text x="0.10500000000000001" y="0.6142857142857143" fill="white" font-size="0.03221079668210409" dominant-baseline="middle">32% UNP</text>
+    </g>
+    <g>
+      <rect x="0.35768637345683274" y="0.5571428571428572" width="0.235393606944514" height="0.1142857142857143" fill="#880" stroke="white" stroke-width="0.001"/>
+      <text x="0.36268637345683274" y="0.6142857142857143" fill="white" font-size="0.02942420086806425" dominant-baseline="middle">29% DNV</text>
+    </g>
+    <g>
+      <rect x="0.5930799804013467" y="0.5571428571428572" width="0.2100707593374457" height="0.1142857142857143" fill="#008" stroke="white" stroke-width="0.001"/>
+      <text x="0.5980799804013467" y="0.6142857142857143" fill="white" font-size="0.026258844917180713" dominant-baseline="middle">26% PA</text>
+    </g>
+    <g>
+      <rect x="0.8031507397387924" y="0.5571428571428572" width="0.09684926026120765" height="0.1142857142857143" fill="#888" stroke="white" stroke-width="0.001"/>
+      <text x="0.8081507397387924" y="0.6142857142857143" fill="white" font-size="0.012106157532650956" dominant-baseline="middle">12% OTHER</text>
+    </g>
+    <text x="0.02" y="0.7285714285714286" fill="black" font-size="0.03" dominant-baseline="middle">1994</text>
+    <g>
+      <rect x="0.1" y="0.6714285714285715" width="0.2786192034731683" height="0.1142857142857143" fill="#008" stroke="white" stroke-width="0.001"/>
+      <text x="0.10500000000000001" y="0.7285714285714286" fill="white" font-size="0.03482740043414604" dominant-baseline="middle">35% PA</text>
+    </g>
+    <g>
+      <rect x="0.37861920347316835" y="0.6714285714285715" width="0.2507103784409012" height="0.1142857142857143" fill="#080" stroke="white" stroke-width="0.001"/>
+      <text x="0.38361920347316836" y="0.7285714285714286" fill="white" font-size="0.03133879730511265" dominant-baseline="middle">31% UNP</text>
+    </g>
+    <g>
+      <rect x="0.6293295819140695" y="0.6714285714285715" width="0.23071629796263823" height="0.1142857142857143" fill="#880" stroke="white" stroke-width="0.001"/>
+      <text x="0.6343295819140695" y="0.7285714285714286" fill="white" font-size="0.02883953724532978" dominant-baseline="middle">29% DNV</text>
+    </g>
+    <g>
+      <rect x="0.8600458798767078" y="0.6714285714285715" width="0.03995412012329232" height="0.1142857142857143" fill="#888" stroke="white" stroke-width="0.001"/>
+      <text x="0.8650458798767078" y="0.7285714285714286" fill="white" font-size="0.00499426501541154" dominant-baseline="middle">5% OTHER</text>
+    </g>
+    <text x="0.02" y="0.8428571428571429" fill="black" font-size="0.03" dominant-baseline="middle">1989</text>
+    <g>
+      <rect x="0.1" y="0.7857142857142857" width="0.322392140781834" height="0.1142857142857143" fill="#880" stroke="white" stroke-width="0.001"/>
+      <text x="0.10500000000000001" y="0.8428571428571429" fill="white" font-size="0.04029901759772925" dominant-baseline="middle">40% DNV</text>
+    </g>
+    <g>
+      <rect x="0.42239214078183396" y="0.7857142857142857" width="0.24219802427181772" height="0.1142857142857143" fill="#080" stroke="white" stroke-width="0.001"/>
+      <text x="0.42739214078183396" y="0.8428571428571429" fill="white" font-size="0.030274753033977215" dominant-baseline="middle">30% UNP</text>
+    </g>
+    <g>
+      <rect x="0.6645901650536518" y="0.7857142857142857" width="0.15236507490161255" height="0.1142857142857143" fill="#008" stroke="white" stroke-width="0.001"/>
+      <text x="0.6695901650536518" y="0.8428571428571429" fill="white" font-size="0.01904563436270157" dominant-baseline="middle">19% SLFP</text>
+    </g>
+    <g>
+      <rect x="0.8169552399552643" y="0.7857142857142857" width="0.08304476004473572" height="0.1142857142857143" fill="#888" stroke="white" stroke-width="0.001"/>
+      <text x="0.8219552399552643" y="0.8428571428571429" fill="white" font-size="0.010380595005591966" dominant-baseline="middle">10% OTHER</text>
+    </g>
+  </g>
+  <g>
+    <text x="0.5" y="0.05" font-size="0.05" text-anchor="middle" fill="black" dominant-baseline="middle">Sri Lankan Parliamentary Elections</text>
+    <text x="0.5" y="0.95" font-size="0.05" text-anchor="middle" fill="#880" dominant-baseline="middle">DNV = Did Not Vote or Vote Rejected</text>
+  </g>
+</svg>
