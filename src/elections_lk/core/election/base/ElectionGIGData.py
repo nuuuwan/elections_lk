@@ -11,14 +11,6 @@ log = Log("ElectionGIGData")
 
 class ElectionGIGData:
 
-    @classmethod
-    def from_year(cls, year: str):
-        election_list = cls.list_all()
-        for election in election_list:
-            if election.year == year:
-                return election
-        raise ValueError(f"No election found for year {year}")
-
     @property
     def gig_table(self) -> GIGTable:
         return GIGTable(
