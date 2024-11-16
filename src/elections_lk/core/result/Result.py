@@ -11,6 +11,9 @@ class Result:
     vote_summary: VoteSummary
     party_to_votes: PartyToVotes
 
+    def copy(self):
+        return Result.from_dict(self.to_dict())
+
     @classmethod
     def from_dict(cls, d) -> "Result":
         return cls(
