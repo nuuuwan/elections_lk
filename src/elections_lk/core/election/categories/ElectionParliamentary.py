@@ -23,6 +23,7 @@ class ElectionParliamentary(Election):
             "2010",
             "2015",
             "2020",
+            "2024",
         ]
 
     @staticmethod
