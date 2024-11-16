@@ -73,3 +73,9 @@ class PartyToVotes:
             else:
                 idx["other"] = idx.get("other", 0) + votes
         return PartyToVotes.from_idx(idx)
+
+    @cached_property
+    def party_to_pvotes(self) -> "PartyToVotes":
+        return PartyToVotes.from_idx(
+            {k: v / self.total for k, v in self.idx.items()}
+        )
