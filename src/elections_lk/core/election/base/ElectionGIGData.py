@@ -34,7 +34,7 @@ class ElectionGIGData:
                 if remote_data_list:
                     return remote_data_list
             except BaseException:
-                log.error("Retrying...")
+                log.error(f"[{t}s] Retrying...")
                 time.sleep(t)
                 t *= 2
 
