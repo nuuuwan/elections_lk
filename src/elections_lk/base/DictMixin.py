@@ -55,7 +55,13 @@ class DictMixin:
         return next(iter(self.idx.keys()))
 
     def filter(self, func):
-        return self.__class__({k: v for k, v in self.idx.items() if func(k, v)})
+        return self.__class__(
+            {
+                k: v
+                for i, (k, v) in enumerate(list(self.idx.items()))
+                if func(k, v, i)
+            }
+        )
 
     @cached_property
     def nonzero(self):
@@ -75,6 +81,9 @@ class DictMixin:
             )
         )
 
+    def set_values(self, value):
+        return self.__class__({k: value for k in self.idx.keys()})
+
     # Math - Operators
     def __add__(self, other):
         assert isinstance(other, DictMixin)
@@ -85,6 +94,9 @@ class DictMixin:
 
     def __mul__(self, other):
         return self.__class__({k: v * other for k, v in self.idx.items()})
+
+    def __eq__(self, value):
+        return self.idx == value.idx
 
     @staticmethod
     def concat(*items):
