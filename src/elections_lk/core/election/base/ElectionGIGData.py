@@ -53,7 +53,9 @@ class ElectionGIGData:
                 results.append(result)
         return results
 
-    def get_results_idx_for_type(self, ent_type: EntType) -> dict[str, Result]:
+    def get_results_idx_for_type(
+        self, ent_type: EntType
+    ) -> dict[str, Result]:
         results = self.get_results_for_type(ent_type)
         return {result.id: result for result in results}
 

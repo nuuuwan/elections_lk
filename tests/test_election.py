@@ -18,15 +18,6 @@ class TestCase(unittest.TestCase):
                 ),
             ],
             [
-                ElectionParliamentary("2024"),
-                VoteSummary(
-                    electors=17140354,
-                    polled=11815246,
-                    valid=11148006,
-                    rejected=667240,
-                ),
-            ],
-            [
                 ElectionLocalGovernment("2025"),
                 VoteSummary(
                     electors=17156338,
@@ -44,6 +35,17 @@ class TestCase(unittest.TestCase):
 
     def test_parliamentary(self):
         election = ElectionParliamentary("2024")
+
+        self.assertEqual(
+            election.lk_result.vote_summary,
+            VoteSummary(
+                electors=17140354,
+                polled=11815246,
+                valid=11148006,
+                rejected=667240,
+            ),
+        )
+
         self.assertEqual(
             election.cum_party_to_seats,
             PartyToVotes(
