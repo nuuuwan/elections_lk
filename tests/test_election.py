@@ -1,24 +1,69 @@
 import unittest
 
-from elections_lk import (ElectionLocalGovernment, ElectionParliamentary,
-                          ElectionPresidential)
+from elections_lk import (
+    ElectionLocalGovernment,
+    ElectionParliamentary,
+    ElectionPresidential,
+    VoteSummary,
+)
 
 
 class TestCase(unittest.TestCase):
-    @unittest.skip("")
+
     def test_elections(self):
-        for election in [
-            ElectionPresidential("2024"),
-            ElectionParliamentary("2024"),
-            ElectionLocalGovernment("2025"),
+        for election, expected_vote_summary in [
+            [
+                ElectionPresidential("2024"),
+                VoteSummary(
+                    electors=17140354,
+                    polled=13619916,
+                    valid=13319616,
+                    rejected=300300,
+                ),
+            ],
+            [
+                ElectionParliamentary("2024"),
+                VoteSummary(
+                    electors=17140354,
+                    polled=11815246,
+                    valid=11148006,
+                    rejected=667240,
+                ),
+            ],
+            [
+                ElectionLocalGovernment("2025"),
+                VoteSummary(
+                    electors=17156338,
+                    polled=10616087,
+                    valid=10410810,
+                    rejected=205277,
+                ),
+            ],
         ]:
-            print(election.lk_result)
+
+            self.assertEqual(
+                election.lk_result.vote_summary,
+                expected_vote_summary,
+            )
 
     def test_parliamentary(self):
         election = ElectionParliamentary("2024")
-        lk_result = election.lk_result
-        print(lk_result.vote_summary)
-        print(lk_result.party_to_votes)
-        print(election.region_to_seats)
-        print(election.region_to_party_to_seats)
-        print(election.cum_party_to_seats)
+
+        self.assertEqual(
+            election.cum_party_to_seats,
+            {
+                "NPP": 159,
+                "SJB": 40,
+                "ITAK": 8,
+                "NDF": 5,
+                "SLPP": 3,
+                "SLMC": 3,
+                "SB": 1,
+                "UNP": 1,
+                "DTNA": 1,
+                "ACTC": 1,
+                "ACMC": 1,
+                "IND17-10": 1,
+                "SLLP": 1,
+            },
+        )

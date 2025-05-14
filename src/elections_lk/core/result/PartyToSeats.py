@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 
-from elections_lk.base import DictMixin
+from elections_lk.base import IntDict
 from elections_lk.core.raw_data import RawData
 from elections_lk.core.result.VoteSummary import VoteSummary
 from elections_lk.core.Votes import Votes
 
 
 @dataclass
-class PartyToSeats(DictMixin):
+class PartyToSeats(IntDict):
     idx: dict[str, int]
 
     IGNORE_FIELDS = ["entity_id"] + VoteSummary.FIELDS

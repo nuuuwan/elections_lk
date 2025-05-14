@@ -2,54 +2,15 @@ from elections_lk.core.result.PartyToVotes import PartyToVotes
 
 
 class Seats:
-    @staticmethod
-    def get_filtered_party_to_votes(
-        party_to_votes: PartyToVotes, p_limit: float
-    ) -> PartyToVotes:
-        min_votes = party_to_votes.total * p_limit
-        return PartyToVotes(
-            {
-                party: votes
-                for party, votes in party_to_votes.items()
-                if votes >= min_votes
-            }
-        )
 
     @staticmethod
-    def get_party_to_seats_f(
-        party_to_votes: PartyToVotes, n_seats: int
+    def get_party_to_seats_bonus(
+        party_to_votes: PartyToVotes, n_seats_bonus: int
     ) -> dict[str, int]:
-        total = sum(party_to_votes.values())
-        party_to_seats_f = {}
-        for party, votes in party_to_votes.items():
-            party_to_seats_f[party] = n_seats * votes / total
-        return party_to_seats_f
-
-    @staticmethod
-    def filter_nonzero(party_to_seats: dict[str, float]) -> dict[str, int]:
-        return {
-            party: int(seats)
-            for party, seats in party_to_seats.items()
-            if seats > 0
-        }
-
-    @staticmethod
-    def get_party_to_seats_i(
-        party_to_seats_f: dict[str, int],
-    ) -> tuple[dict[str, int], dict[str, int]]:
-        unfiltered = {
-            party: int(seats) for party, seats in party_to_seats_f.items()
-        }
-        return Seats.filter_nonzero(unfiltered)
-
-    @staticmethod
-    def get_party_to_rem_seats(
-        party_to_seats_f: dict[str, int],
-    ) -> dict[str, float]:
-        return {
-            party: seats - int(seats)
-            for party, seats in party_to_seats_f.items()
-        }
+        winning_party = sorted(
+            party_to_votes.items(), key=lambda x: x[1], reverse=True
+        )[0][0]
+        return {winning_party: n_seats_bonus}
 
     @staticmethod
     def get_party_to_seats_rem(
@@ -63,15 +24,6 @@ class Seats:
                 party_to_seats_rem[party] = 0
             party_to_seats_rem[party] += 1
         return party_to_seats_rem
-
-    @staticmethod
-    def get_party_to_seats_bonus(
-        party_to_votes: PartyToVotes, n_seats_bonus: int
-    ) -> dict[str, int]:
-        winning_party = sorted(
-            party_to_votes.items(), key=lambda x: x[1], reverse=True
-        )[0][0]
-        return {winning_party: n_seats_bonus}
 
     @staticmethod
     def sort(
@@ -110,18 +62,16 @@ class Seats:
         region_id: str, n_seats: int, party_to_votes: PartyToVotes
     ) -> dict[str, int]:
         n_seats_bonus = Seats.get_n_seats_bonus(region_id)
-        p_limit = Seats.get_p_limit(region_id)
 
-        filtered_party_to_votes = Seats.get_filtered_party_to_votes(
-            party_to_votes, p_limit
+        filtered_party_to_votes = party_to_votes.filter(
+            lambda _, votes: votes
+            >= party_to_votes.total * Seats.get_p_limit(region_id)
         )
 
         n_seats_non_bonus = n_seats - n_seats_bonus
-        party_to_seats_f = Seats.get_party_to_seats_f(
-            filtered_party_to_votes, n_seats_non_bonus
-        )
-        party_to_seats_i = Seats.get_party_to_seats_i(party_to_seats_f)
-        party_to_rem_seats = Seats.get_party_to_rem_seats(party_to_seats_f)
+        party_to_seats_f = filtered_party_to_votes.norm * n_seats_non_bonus
+        party_to_seats_i = party_to_seats_f.int.nonzero
+        party_to_rem_seats = party_to_seats_f.non_int.nonzero
 
         n_seats_i = sum(party_to_seats_i.values())
         party_to_seats_rem = Seats.get_party_to_seats_rem(

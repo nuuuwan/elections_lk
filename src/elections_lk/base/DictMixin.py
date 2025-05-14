@@ -1,4 +1,4 @@
-from functools import cache, cached_property
+from functools import cached_property
 
 
 class DictMixin:
@@ -17,10 +17,10 @@ class DictMixin:
     def __len__(self):
         return len(self.idx)
 
-    def __getattr__(self, key: str) -> int:
+    def __getattr__(self, key: str):
         return self.idx[key]
 
-    def __getitem__(self, key: str) -> int:
+    def __getitem__(self, key: str):
         return self.idx[key]
 
     def items(self):
@@ -35,15 +35,36 @@ class DictMixin:
     # Math
 
     @cached_property
-    def total(self) -> int:
+    def total(self):
         return sum(self.idx.values())
 
-    @cache
-    def get_p(self, key: str) -> int:
-        if key not in self.idx:
-            return 0
-        return self.idx[key] / self.total
+    @cached_property
+    def norm(self):
+        return self.__class__(
+            {k: v / self.total for k, v in self.idx.items()}
+        )
+
+    @cached_property
+    def int(self):
+        return self.__class__({k: int(v) for k, v in self.idx.items()})
+
+    @cached_property
+    def non_int(self):
+        return self.__class__({k: v - int(v) for k, v in self.idx.items()})
 
     @cached_property
     def max_key(self) -> str:
         return next(iter(self.idx.keys()))
+
+    def filter(self, func):
+        return self.__class__(
+            {k: v for k, v in self.idx.items() if func(k, v)}
+        )
+
+    @cached_property
+    def nonzero(self):
+        return self.__class__({k: v for k, v in self.idx.items() if v != 0})
+
+    # Math - Operators
+    def __mul__(self, other):
+        return self.__class__({k: v * other for k, v in self.idx.items()})
