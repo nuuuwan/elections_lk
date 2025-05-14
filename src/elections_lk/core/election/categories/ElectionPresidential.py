@@ -26,10 +26,3 @@ class ElectionPresidential(Election):
             "2019",
             "2024",
         ]
-
-    @staticmethod
-    def list_all() -> list["ElectionPresidential"]:
-        return [
-            ElectionPresidential(year)
-            for year in ElectionPresidential.get_years()
-        ]

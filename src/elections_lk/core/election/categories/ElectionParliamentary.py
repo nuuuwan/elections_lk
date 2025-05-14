@@ -30,13 +30,6 @@ class ElectionParliamentary(Election):
             "2024",
         ]
 
-    @staticmethod
-    def list_all() -> list["ElectionParliamentary"]:
-        return [
-            ElectionParliamentary(year)
-            for year in ElectionParliamentary.get_years()
-        ]
-
     @cached_property
     def region_to_seats(self) -> dict[str, Seats]:
         return YEAR_TO_REGION_TO_SEATS[self.year]
