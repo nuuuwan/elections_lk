@@ -1,18 +1,23 @@
+from elections_lk.core.result.PartyToVotes import PartyToVotes
+
+
 class Seats:
     @staticmethod
     def get_filtered_party_to_votes(
-        party_to_votes: dict[str, int], p_limit: float
-    ) -> dict[str, int]:
+        party_to_votes: PartyToVotes, p_limit: float
+    ) -> PartyToVotes:
         min_votes = party_to_votes.total * p_limit
-        return {
-            party: votes
-            for party, votes in party_to_votes.items()
-            if votes >= min_votes
-        }
+        return PartyToVotes(
+            {
+                party: votes
+                for party, votes in party_to_votes.items()
+                if votes >= min_votes
+            }
+        )
 
     @staticmethod
     def get_party_to_seats_f(
-        party_to_votes: dict[str, int], n_seats: int
+        party_to_votes: PartyToVotes, n_seats: int
     ) -> dict[str, int]:
         total = sum(party_to_votes.values())
         party_to_seats_f = {}
@@ -30,7 +35,7 @@ class Seats:
 
     @staticmethod
     def get_party_to_seats_i(
-        party_to_seats_f: dict[str, int]
+        party_to_seats_f: dict[str, int],
     ) -> tuple[dict[str, int], dict[str, int]]:
         unfiltered = {
             party: int(seats) for party, seats in party_to_seats_f.items()
@@ -39,7 +44,7 @@ class Seats:
 
     @staticmethod
     def get_party_to_rem_seats(
-        party_to_seats_f: dict[str, int]
+        party_to_seats_f: dict[str, int],
     ) -> dict[str, float]:
         return {
             party: seats - int(seats)
@@ -61,7 +66,7 @@ class Seats:
 
     @staticmethod
     def get_party_to_seats_bonus(
-        party_to_votes: dict[str, int], n_seats_bonus: int
+        party_to_votes: PartyToVotes, n_seats_bonus: int
     ) -> dict[str, int]:
         winning_party = sorted(
             party_to_votes.items(), key=lambda x: x[1], reverse=True
@@ -70,7 +75,7 @@ class Seats:
 
     @staticmethod
     def sort(
-        party_to_seats: dict[str, int], party_to_votes: dict[str, int]
+        party_to_seats: dict[str, int], party_to_votes: PartyToVotes
     ) -> dict[str, int]:
         return dict(
             sorted(
@@ -90,19 +95,19 @@ class Seats:
 
     @staticmethod
     def get_n_seats_bonus(region_id: str) -> int:
-        if region_id == 'LK':
+        if region_id == "LK":
             return 0
         return 1
 
     @staticmethod
     def get_p_limit(region_id: str) -> float:
-        if region_id == 'LK':
+        if region_id == "LK":
             return 0
         return 0.05
 
     @staticmethod
     def get_party_to_seats(
-        region_id: str, n_seats: int, party_to_votes: dict[str, int]
+        region_id: str, n_seats: int, party_to_votes: PartyToVotes
     ) -> dict[str, int]:
         n_seats_bonus = Seats.get_n_seats_bonus(region_id)
         p_limit = Seats.get_p_limit(region_id)

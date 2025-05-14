@@ -20,6 +20,9 @@ class DictMixin:
     def __getattr__(self, key: str) -> int:
         return self.idx[key]
 
+    def __getitem__(self, key: str) -> int:
+        return self.idx[key]
+
     def items(self):
         return self.idx.items()
 
