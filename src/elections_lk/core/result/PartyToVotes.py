@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from functools import cached_property
 
-from elections_lk.base import IntDict
+from elections_lk.base import NumDict
 from elections_lk.core.raw_data import RawData
 from elections_lk.core.result.VoteSummary import VoteSummary
 from elections_lk.core.Votes import Votes
 
 
 @dataclass
-class PartyToVotes(IntDict):
+class PartyToVotes(NumDict):
     idx: dict[str, int]
 
     IGNORE_FIELDS = ["entity_id"] + VoteSummary.FIELDS

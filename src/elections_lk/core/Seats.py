@@ -1,4 +1,4 @@
-from elections_lk.base import IntDict
+from elections_lk.base import NumDict
 from elections_lk.core.result.PartyToVotes import PartyToVotes
 
 
@@ -18,7 +18,7 @@ class Seats:
     @staticmethod
     def get_party_to_seats(
         region_id: str, n_seats: int, party_to_votes: PartyToVotes
-    ) -> IntDict:
+    ) -> NumDict:
         n_seats_bonus = Seats.get_n_seats_bonus(region_id)
 
         filtered_party_to_votes = party_to_votes.filter(
@@ -36,7 +36,7 @@ class Seats:
             lambda _, __, i: i < n_seats_non_bonus - n_seats_i
         ).set_values(1)
 
-        party_to_seats_bonus = IntDict(
+        party_to_seats_bonus = NumDict(
             {party_to_votes.max_key: n_seats_bonus}
         )
 

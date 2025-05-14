@@ -1,9 +1,9 @@
 from functools import cached_property
 
 
-class DictMixin:
-
-    # Assumes that self.idx exists, and that idx is sorted by value descending
+class NumDict:
+    def __init__(self, idx: dict[str, int]):
+        self.idx = idx
 
     def __hash__(self):
         return hash(tuple(self.idx.items()))
@@ -31,8 +31,6 @@ class DictMixin:
 
     def values(self):
         return self.idx.values()
-
-    # Math
 
     @cached_property
     def total(self):
@@ -88,7 +86,7 @@ class DictMixin:
 
     # Math - Operators
     def __add__(self, other):
-        assert isinstance(other, DictMixin)
+        assert isinstance(other, NumDict)
         union_keys = set(self.idx.keys()).union(other.idx.keys())
         return self.__class__(
             {k: self.idx.get(k, 0) + other.idx.get(k, 0) for k in union_keys}

@@ -1,12 +1,7 @@
 import unittest
 
-from elections_lk import (
-    ElectionLocalGovernment,
-    ElectionParliamentary,
-    ElectionPresidential,
-    PartyToVotes,
-    VoteSummary,
-)
+from elections_lk import (ElectionLocalGovernment, ElectionParliamentary,
+                          ElectionPresidential, PartyToVotes, VoteSummary)
 
 
 class TestCase(unittest.TestCase):

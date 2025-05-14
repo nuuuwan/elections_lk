@@ -1,6 +1,6 @@
 import unittest
 
-from elections_lk import IntDict, PartyToVotes, Seats
+from elections_lk import NumDict, PartyToVotes, Seats
 
 
 class TestCase(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestCase(unittest.TestCase):
                         "B": 208_249,
                     }
                 ),
-                IntDict({"A": 14, "B": 4}),
+                NumDict({"A": 14, "B": 4}),
             ],
         ]:
             self.assertEqual(
