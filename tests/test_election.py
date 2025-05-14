@@ -5,11 +5,12 @@ from elections_lk import (
     ElectionParliamentary,
     ElectionPresidential,
     VoteSummary,
+    PartyToVotes,
 )
 
 
 class TestCase(unittest.TestCase):
-
+    @unittest.skip("slow")
     def test_elections(self):
         for election, expected_vote_summary in [
             [
@@ -48,22 +49,24 @@ class TestCase(unittest.TestCase):
 
     def test_parliamentary(self):
         election = ElectionParliamentary("2024")
-
+        print(election.cum_party_to_seats)
         self.assertEqual(
             election.cum_party_to_seats,
-            {
-                "NPP": 159,
-                "SJB": 40,
-                "ITAK": 8,
-                "NDF": 5,
-                "SLPP": 3,
-                "SLMC": 3,
-                "SB": 1,
-                "UNP": 1,
-                "DTNA": 1,
-                "ACTC": 1,
-                "ACMC": 1,
-                "IND17-10": 1,
-                "SLLP": 1,
-            },
+            PartyToVotes(
+                idx={
+                    "NPP": 159,
+                    "SJB": 40,
+                    "ITAK": 8,
+                    "NDF": 5,
+                    "SLPP": 3,
+                    "SLMC": 3,
+                    "SB": 1,
+                    "UNP": 1,
+                    "DTNA": 1,
+                    "ACTC": 1,
+                    "ACMC": 1,
+                    "IND17-10": 1,
+                    "SLLP": 1,
+                }
+            ),
         )

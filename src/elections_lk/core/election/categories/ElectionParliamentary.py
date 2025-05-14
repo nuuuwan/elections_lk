@@ -2,6 +2,7 @@ from functools import cached_property
 
 from gig import EntType
 
+from elections_lk.base import IntDict
 from elections_lk.constants import YEAR_TO_REGION_TO_SEATS
 from elections_lk.core.election.base.Election import Election
 from elections_lk.core.election.categories.ElectionCategory import (
@@ -42,9 +43,7 @@ class ElectionParliamentary(Election):
         idx = {}
         for region_id, n_seats in self.region_to_seats.items():
             result = (
-                ed_to_result[region_id]
-                if region_id != "LK"
-                else self.lk_result
+                ed_to_result[region_id] if region_id != "LK" else self.lk_result
             )
             idx[region_id] = (
                 Seats.get_party_to_seats(
@@ -57,5 +56,6 @@ class ElectionParliamentary(Election):
 
     @cached_property
     def cum_party_to_seats(self) -> dict[str, int]:
-        unsorted = Seats.concat(*self.region_to_party_to_seats.values())
-        return Seats.sort(unsorted, self.lk_result.party_to_votes)
+        return IntDict.concat(*self.region_to_party_to_seats.values()).sort(
+            lambda party: self.lk_result.party_to_votes[party]
+        )
