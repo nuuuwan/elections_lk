@@ -1,5 +1,5 @@
 import time
-from functools import cached_property
+from functools import cache, cached_property
 
 from gig import GIGTable, EntType
 from utils import Log
@@ -30,23 +30,37 @@ class ElectionGIGData:
                 time.sleep(t)
                 t *= 2
 
-    @cached_property
-    def base_results(self) -> list[Result]:
+    @cache
+    def get_result_for_id(self):
+        for row in self.remote_data_list:
+            if row["entity_id"] == id:
+                return Result.from_dict(row)
+        raise ValueError(f"Result not found for id: {id}")
+
+    @cache
+    def get_results_for_type(self, ent_type: EntType) -> list[Result]:
         results = []
-        base_ent_type = self.get_base_ent_type()
         for row in self.remote_data_list:
             entity_id = row["entity_id"]
-            ent_type = EntType.from_id(entity_id)
-            if ent_type != base_ent_type:
+            if EntType.from_id(entity_id) != ent_type:
                 continue
             result = Result.from_dict(row)
             results.append(result)
         return results
 
+    @cache
+    def get_results_idx_for_type(self, ent_type: EntType) -> dict[str, Result]:
+        results = self.get_results_for_type(ent_type)
+        return {result.id: result for result in results}
+
+    @cached_property
+    def base_results(self) -> list[Result]:
+        return self.get_results_for_type(self.get_base_ent_type())
+
     @cached_property
     def base_results_idx(self) -> dict[str, Result]:
-        return {result.id: result for result in self.base_results}
+        return self.get_results_idx_for_type(self.get_base_ent_type())
 
     @cached_property
     def lk_result(self):
-        return Result.from_list("LK", self.base_results)
+        return self.get_result_for_id("LK")

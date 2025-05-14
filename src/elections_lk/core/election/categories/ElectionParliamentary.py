@@ -43,9 +43,10 @@ class ElectionParliamentary(Election):
 
     @cached_property
     def region_to_party_to_seats(self) -> dict[str, dict[str, int]]:
+        ed_to_result = self.get_results_idx_for_type(EntType.ED)
         idx = {}
         for region_id, n_seats in self.region_to_seats.items():
-            result = self.get_result(region_id)
+            result = ed_to_result(region_id)
             idx[region_id] = (
                 Seats.get_party_to_seats(
                     region_id, n_seats, result.party_to_votes
@@ -58,4 +59,4 @@ class ElectionParliamentary(Election):
     @cached_property
     def cum_party_to_seats(self) -> dict[str, int]:
         unsorted = Seats.concat(*self.region_to_party_to_seats.values())
-        return Seats.sort(unsorted, self.get_result("LK").party_to_votes)
+        return Seats.sort(unsorted, self.lk_result.party_to_votes)
