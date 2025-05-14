@@ -32,19 +32,17 @@ class ElectionGIGData:
                 time.sleep(t)
                 t *= 2
 
+    def get_result_from_row(self, row: dict) -> Result:
+        if self.has_result_seats:
+            return ResultWithSeats.from_dict(row)
+        return Result.from_dict(row)
+
     @cache
     def get_result_for_id(self, entity_id: str) -> Result:
         for row in self.remote_data_list:
             if row["entity_id"] == entity_id:
-                return Result.from_dict(row)
+                return self.get_result_from_row(row)
         raise ValueError(f"Result not found for entity_id: {entity_id}")
-
-    def get_result_from_row(self, row: dict) -> Result:
-
-        if self.has_result_seats:
-            return ResultWithSeats.from_dict(row)
-
-        return Result.from_dict(row)
 
     def get_results_for_type(self, ent_type: EntType) -> list[Result]:
         results = []
