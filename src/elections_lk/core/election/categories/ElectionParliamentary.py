@@ -46,7 +46,9 @@ class ElectionParliamentary(Election):
         ed_to_result = self.get_results_idx_for_type(EntType.ED)
         idx = {}
         for region_id, n_seats in self.region_to_seats.items():
-            result = ed_to_result(region_id)
+            result = (
+                ed_to_result[region_id] if region_id != "LK" else self.lk_result
+            )
             idx[region_id] = (
                 Seats.get_party_to_seats(
                     region_id, n_seats, result.party_to_votes

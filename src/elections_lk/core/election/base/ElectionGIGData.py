@@ -31,13 +31,12 @@ class ElectionGIGData:
                 t *= 2
 
     @cache
-    def get_result_for_id(self):
+    def get_result_for_id(self, entity_id: str) -> Result:
         for row in self.remote_data_list:
-            if row["entity_id"] == id:
+            if row["entity_id"] == entity_id:
                 return Result.from_dict(row)
-        raise ValueError(f"Result not found for id: {id}")
+        raise ValueError(f"Result not found for entity_id: {entity_id}")
 
-    @cache
     def get_results_for_type(self, ent_type: EntType) -> list[Result]:
         results = []
         for row in self.remote_data_list:
@@ -48,7 +47,6 @@ class ElectionGIGData:
             results.append(result)
         return results
 
-    @cache
     def get_results_idx_for_type(self, ent_type: EntType) -> dict[str, Result]:
         results = self.get_results_for_type(ent_type)
         return {result.id: result for result in results}
@@ -64,3 +62,7 @@ class ElectionGIGData:
     @cached_property
     def lk_result(self):
         return self.get_result_for_id("LK")
+
+    @cached_property
+    def winning_party_id(self) -> str:
+        return self.lk_result.winning_party_id

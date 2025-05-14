@@ -2,7 +2,7 @@ from elections_lk import ElectionParliamentary
 
 
 def main():
-    elections = ElectionParliamentary.list_all()[-1:]
+    elections = ElectionParliamentary.list_all()
     for election in elections:
         print(
             election.year,
