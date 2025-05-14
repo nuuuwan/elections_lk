@@ -5,9 +5,8 @@ from gig import EntType
 from elections_lk.base import IntDict
 from elections_lk.constants import YEAR_TO_REGION_TO_SEATS
 from elections_lk.core.election.base.Election import Election
-from elections_lk.core.election.categories.ElectionCategory import (
-    ElectionCategory,
-)
+from elections_lk.core.election.categories.ElectionCategory import \
+    ElectionCategory
 from elections_lk.core.Seats import Seats
 
 
@@ -43,7 +42,9 @@ class ElectionParliamentary(Election):
         idx = {}
         for region_id, n_seats in self.region_to_seats.items():
             result = (
-                ed_to_result[region_id] if region_id != "LK" else self.lk_result
+                ed_to_result[region_id]
+                if region_id != "LK"
+                else self.lk_result
             )
             idx[region_id] = (
                 Seats.get_party_to_seats(

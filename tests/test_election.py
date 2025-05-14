@@ -1,16 +1,11 @@
 import unittest
 
-from elections_lk import (
-    ElectionLocalGovernment,
-    ElectionParliamentary,
-    ElectionPresidential,
-    VoteSummary,
-    PartyToVotes,
-)
+from elections_lk import (ElectionLocalGovernment, ElectionParliamentary,
+                          ElectionPresidential, PartyToVotes, VoteSummary)
 
 
 class TestCase(unittest.TestCase):
-    @unittest.skip("slow")
+
     def test_elections(self):
         for election, expected_vote_summary in [
             [
@@ -49,7 +44,6 @@ class TestCase(unittest.TestCase):
 
     def test_parliamentary(self):
         election = ElectionParliamentary("2024")
-        print(election.cum_party_to_seats)
         self.assertEqual(
             election.cum_party_to_seats,
             PartyToVotes(

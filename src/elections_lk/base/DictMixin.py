@@ -40,7 +40,9 @@ class DictMixin:
 
     @cached_property
     def norm(self):
-        return self.__class__({k: v / self.total for k, v in self.idx.items()})
+        return self.__class__(
+            {k: v / self.total for k, v in self.idx.items()}
+        )
 
     @cached_property
     def int(self):
@@ -100,7 +102,6 @@ class DictMixin:
 
     @staticmethod
     def concat(*items):
-        print(items)
         sum_item = items[0]
         for item in items[1:]:
             sum_item += item

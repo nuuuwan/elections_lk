@@ -1,5 +1,4 @@
-from elections_lk.base import IntDict, FloatDict
-
+from elections_lk.base import IntDict
 from elections_lk.core.result.PartyToVotes import PartyToVotes
 
 
@@ -37,7 +36,9 @@ class Seats:
             lambda _, __, i: i < n_seats_non_bonus - n_seats_i
         ).set_values(1)
 
-        party_to_seats_bonus = IntDict({party_to_votes.max_key: n_seats_bonus})
+        party_to_seats_bonus = IntDict(
+            {party_to_votes.max_key: n_seats_bonus}
+        )
 
         return (
             party_to_seats_i + party_to_seats_rem + party_to_seats_bonus

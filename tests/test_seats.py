@@ -1,5 +1,6 @@
 import unittest
-from elections_lk import Seats, PartyToVotes, IntDict
+
+from elections_lk import IntDict, PartyToVotes, Seats
 
 
 class TestCase(unittest.TestCase):
