@@ -1,5 +1,5 @@
 import time
-from functools import cache, cached_property
+from functools import cached_property
 
 from gig import GIGTable, EntType
 from utils import Log
