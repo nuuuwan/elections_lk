@@ -1,29 +1,29 @@
 from dataclasses import dataclass
 from functools import cache, cached_property
 
+from elections_lk.base import DictMixin, RawData
 from elections_lk.core.result.VoteSummary import VoteSummary
 from elections_lk.core.Votes import Votes
 
 
 @dataclass
-class PartyToVotes:
+class PartyToVotes(DictMixin):
     idx: dict[str, int]
 
-    def __hash__(self):
-        return hash(tuple(self.idx.items()))
+    IGNORE_FIELDS = ["entity_id"] + VoteSummary.FIELDS
 
     @classmethod
     def from_idx(cls, idx):
-        sorted_idx = dict(
-            sorted(idx.items(), key=lambda x: x[1], reverse=True)
-        )
+        sorted_idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
         return cls(sorted_idx)
 
     @classmethod
     def from_dict(cls, d) -> "PartyToVotes":
         idx = {}
         for k, v in d.items():
-            if k not in ["entity_id"] + VoteSummary.FIELDS:
+            if k not in PartyToVotes.IGNORE_FIELDS and RawData.is_extra_field(
+                k
+            ):
                 idx[k] = Votes.parse(v)
         idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
         return cls.from_idx(idx)
