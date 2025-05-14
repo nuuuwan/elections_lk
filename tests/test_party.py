@@ -1,4 +1,5 @@
 import unittest
+
 from elections_lk import Party
 
 
