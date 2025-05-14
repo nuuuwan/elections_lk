@@ -53,19 +53,13 @@ class ElectionGIGData:
                 results.append(result)
         return results
 
-    def get_results_idx_for_type(
-        self, ent_type: EntType
-    ) -> dict[str, Result]:
+    def get_results_idx_for_type(self, ent_type: EntType) -> dict[str, Result]:
         results = self.get_results_for_type(ent_type)
         return {result.id: result for result in results}
 
     @cached_property
     def base_results(self) -> list[Result]:
         return self.get_results_for_type(self.get_base_ent_type())
-
-    @cached_property
-    def base_results_idx(self) -> dict[str, Result]:
-        return self.get_results_idx_for_type(self.get_base_ent_type())
 
     @cached_property
     def lk_result(self):
