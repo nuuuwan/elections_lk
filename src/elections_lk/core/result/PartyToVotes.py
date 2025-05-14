@@ -28,29 +28,6 @@ class PartyToVotes:
         idx = dict(sorted(idx.items(), key=lambda x: x[1], reverse=True))
         return cls.from_idx(idx)
 
-    @classmethod
-    def from_list(cls, party_to_votes_list) -> "PartyToVotes":
-        idx = {}
-        for party_to_votes in party_to_votes_list:
-            for party, votes in party_to_votes.items():
-                idx[party] = idx.get(party, 0) + votes
-        return cls.from_idx(idx)
-
-    def __getattr__(self, key: str) -> int:
-        return self.idx[key]
-
-    def __getitem__(self, key: str) -> int:
-        return self.idx[key]
-
-    def items(self):
-        return self.idx.items()
-
-    def keys(self):
-        return self.idx.keys()
-
-    def values(self):
-        return self.idx.values()
-
     @cached_property
     def total(self) -> int:
         return sum(self.idx.values())

@@ -14,10 +14,6 @@ class ElectionBase:
     def title(self) -> str:
         return f"{self.year} {self.category.title()}"
 
-    @cached_property
-    def d_list(self):
-        return [base_result.to_dict() for base_result in self.base_results]
-
     @classmethod
     def list_all(cls) -> list:
         return [cls(year) for year in cls.get_years()]
