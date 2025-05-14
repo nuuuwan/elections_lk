@@ -1,5 +1,5 @@
 from functools import cached_property
-
+from gig import EntType
 from elections_lk.constants import YEAR_TO_REGION_TO_SEATS
 from elections_lk.core.election.base.Election import Election
 from elections_lk.core.election.categories.ElectionCategory import (
@@ -11,6 +11,10 @@ from elections_lk.core.Seats import Seats
 class ElectionParliamentary(Election):
     def __init__(self, year: str):
         super().__init__(year, ElectionCategory.PARLIAMENTARY)
+
+    @staticmethod
+    def get_base_ent_type() -> str:
+        return EntType.PD
 
     @staticmethod
     def get_years() -> list[str]:
