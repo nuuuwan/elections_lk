@@ -1,7 +1,7 @@
 import time
 from functools import cache, cached_property
 
-from gig import GIGTable, EntType
+from gig import EntType, GIGTable
 from utils import Log
 
 from elections_lk.core.result import Result
@@ -26,7 +26,7 @@ class ElectionGIGData:
                 if remote_data_list:
                     return remote_data_list
             except BaseException:
-                log.error(f"[{t}s] Retrying...")
+                log.error(f"[{self.gig_table}] Retrying in {t}s...")
                 time.sleep(t)
                 t *= 2
 
