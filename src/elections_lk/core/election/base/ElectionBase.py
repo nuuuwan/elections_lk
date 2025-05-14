@@ -17,3 +17,7 @@ class ElectionBase:
     @classmethod
     def list_all(cls) -> list:
         return [cls(year) for year in cls.get_years()]
+
+    @cached_property
+    def has_result_seats(self) -> bool:
+        return False

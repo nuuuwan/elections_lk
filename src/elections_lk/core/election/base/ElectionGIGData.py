@@ -4,7 +4,6 @@ from functools import cache, cached_property
 from gig import EntType, GIGTable
 from utils import Log
 
-from elections_lk.core.election.categories import ElectionCategory
 from elections_lk.core.result import Result, ResultWithSeats
 
 log = Log("ElectionGIGData")
@@ -41,16 +40,11 @@ class ElectionGIGData:
         raise ValueError(f"Result not found for entity_id: {entity_id}")
 
     def get_result_from_row(self, row: dict) -> Result:
-        if self.category in [
-            ElectionCategory.PRESIDENTIAL,
-            ElectionCategory.PARLIAMENTARY,
-        ]:
-            return Result.from_dict(row)
 
-        if self.category == ElectionCategory.LOCAL_GOVERNMENT:
+        if self.has_result_seats:
             return ResultWithSeats.from_dict(row)
 
-        raise ValueError(f"Unknown category: {self.category}")
+        return Result.from_dict(row)
 
     def get_results_for_type(self, ent_type: EntType) -> list[Result]:
         results = []

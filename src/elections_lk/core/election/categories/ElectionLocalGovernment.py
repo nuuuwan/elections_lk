@@ -1,9 +1,10 @@
+from functools import cached_property
+
 from gig import EntType
 
 from elections_lk.core.election.base.Election import Election
-from elections_lk.core.election.categories.ElectionCategory import (
-    ElectionCategory,
-)
+from elections_lk.core.election.categories.ElectionCategory import \
+    ElectionCategory
 
 
 class ElectionLocalGovernment(Election):
@@ -19,3 +20,7 @@ class ElectionLocalGovernment(Election):
         return [
             "2025",
         ]
+
+    @cached_property
+    def has_result_seats(self) -> bool:
+        return True
