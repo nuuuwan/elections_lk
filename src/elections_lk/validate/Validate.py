@@ -19,11 +19,6 @@ class Validate:
                 lambda summary: summary.electors >= summary.polled,
                 "electors >= polled",
             ),
-            # (
-            #     lambda summary: summary.valid + summary.rejected
-            #     == summary.polled,
-            #     "valid + rejected == polled",
-            # ),
         ]:
             if not checker(summary):
                 log.error(f"[{label}] {election.title} {result.id} {summary}")
@@ -36,7 +31,7 @@ class Validate:
     @staticmethod
     def single(election):
         log.debug(f"Validating {election.title}")
-        for result in election.pd_results:
+        for result in election.base_results:
             Validate.result(election, result)
 
     @staticmethod
