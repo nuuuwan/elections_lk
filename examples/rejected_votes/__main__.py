@@ -12,13 +12,13 @@ log = Log(os.path.basename(os.path.dirname(__file__)))
 
 
 def plot_bars(elections, x_label, x_items, p_rejected):
-
+    n_x = len(x_items)
     mean_p_rejected = np.mean(p_rejected)
     std_p_rejected = np.std(p_rejected)
     dist = stats.norm(loc=mean_p_rejected, scale=std_p_rejected)
     ci_lower, ci_upper = dist.interval(0.95)
 
-    plt.figure(figsize=(16, 9))
+    plt.figure(figsize=(16, 9 * max(1, n_x / 100)))
 
     # Create horizontal lollipop chart
     y_positions = range(len(x_items))
@@ -65,7 +65,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     )
     plt.xlabel("Rejected Votes (%)")
     plt.ylabel(x_label)
-    plt.yticks(y_positions, x_items, fontsize=min(12, int(800 / len(x_items))))
+    plt.yticks(y_positions, x_items, fontsize=min(12, int(800 / n_x)))
     plt.legend()
     plt.gca().xaxis.set_major_formatter(
         plt.FuncFormatter(lambda y, _: f"{y:.1%}")
