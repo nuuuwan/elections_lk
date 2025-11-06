@@ -11,7 +11,7 @@ from elections_lk import ElectionParliamentary
 log = Log(os.path.basename(os.path.dirname(__file__)))
 
 
-def plot_bars(x_label, x_items, p_rejected):
+def plot_bars(elections, x_label, x_items, p_rejected):
 
     mean_p_rejected = np.mean(p_rejected)
     std_p_rejected = np.std(p_rejected)
@@ -33,8 +33,27 @@ def plot_bars(x_label, x_items, p_rejected):
         linestyle=":",
         label="95% CI Upper",
     )
+
+    # Annotate bars that exceed the upper confidence interval
+    for i, (x_item, p_rej) in enumerate(zip(x_items, p_rejected)):
+        if p_rej > ci_upper:
+            plt.annotate(
+                f"{x_item}",
+                xy=(x_item, p_rej),
+                xytext=(0, 5),
+                textcoords="offset points",
+                ha="center",
+                fontsize=8,
+                color="red",
+            )
+    election_years = [election.year for election in elections]
+    min_election_year = min(election_years)
+    max_election_year = max(election_years)
+    elections_label = f"({min_election_year} - {max_election_year})"
+
     plt.title(
-        "Rejected Votes in Sri Lankan Parliamentary Elections (1989 - 2024)"
+        "Rejected Votes"
+        + f" in Sri Lankan Parliamentary Elections {elections_label}"
     )
     plt.xlabel(x_label)
     plt.ylabel("Rejected Votes (%)")
@@ -61,6 +80,7 @@ def q1(elections):
         p_rejected.append(vote_summary.p_rejected)
 
     plot_bars(
+        elections,
         "Election Year",
         years,
         p_rejected,
@@ -83,7 +103,7 @@ def q2(elections, ent_type):
         mean_p_rejected_for_ent = p_sum_rejected / p_sum_polled
         p_rejected_for_ents.append(mean_p_rejected_for_ent)
 
-    plot_bars(ent_type.name.title(), ent_names, p_rejected_for_ents)
+    plot_bars(elections, ent_type.name.title(), ent_names, p_rejected_for_ents)
 
 
 if __name__ == "__main__":
@@ -91,7 +111,7 @@ if __name__ == "__main__":
         election
         for election in ElectionParliamentary.list_all()
         if election.year != "2000"
-    ]
+    ][-5:]
     q1(elections)
     q2(elections, EntType.DISTRICT)
     q2(elections, EntType.PD)
