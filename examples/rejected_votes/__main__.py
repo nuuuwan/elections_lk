@@ -41,16 +41,19 @@ def plot_bars(elections, x_label, x_items, p_rejected):
 
     # Annotate bars that exceed the upper confidence interval
     for i, (x_item, p_rej) in enumerate(zip(x_items, p_rejected)):
-        if p_rej > ci_upper:
-            plt.annotate(
-                f"{x_item}",
-                xy=(p_rej, i),
-                xytext=(5, 0),
-                textcoords="offset points",
-                va="center",
-                fontsize=8,
-                color="red",
-            )
+        q = (p_rej - ci_lower) / (ci_upper - ci_lower)
+        q = min(max(q, 0), 1)
+        alpha = 1 if p_rej > ci_upper else 0.2
+        color = (q, 0, 1 - q, alpha)
+        plt.annotate(
+            f"{x_item}",
+            xy=(p_rej, i),
+            xytext=(5, 0),
+            textcoords="offset points",
+            va="center",
+            fontsize=8,
+            color=color,
+        )
     election_years = [election.year for election in elections]
     min_election_year = min(election_years)
     max_election_year = max(election_years)
