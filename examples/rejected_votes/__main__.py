@@ -63,8 +63,10 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         plt.FuncFormatter(lambda y, _: f"{y:.1%}")
     )
 
+    id = f"{x_label.replace(' ', '-')}-{min_election_year}-{max_election_year}"
     image_path = os.path.join(
-        os.path.dirname(__file__), f"By-{x_label.replace(' ', '-')}.png"
+        os.path.dirname(__file__),
+        f"By-{id}.png",
     )
     plt.savefig(image_path)
     log.info(f"Wrote {image_path}")
