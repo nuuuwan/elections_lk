@@ -186,7 +186,7 @@ Understanding these patterns could help election authorities develop targeted in
 
 # Appendix: Code & Data used in this Analysis
 
-- [https://github.com/nuuuwan/elections_lk](https://github.com/nuuuwan/elections_lk)
+- [https://github.com/nuuuwan/elections_lk](https://github.com/nuuuwan/elections_lk/blob/main/example_analysis/rejected_votes/README.md)
 
 # Appendix: Statistics
 
