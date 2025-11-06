@@ -60,6 +60,34 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         label="95% CI Upper",
     )
 
+    plt.text(
+        mean_p_rejected,
+        n_x - 1,
+        f"{mean_p_rejected:.1%}",
+        color="grey",
+        fontsize=9,
+        ha="center",
+        va="bottom",
+    )
+    plt.text(
+        ci_lower,
+        n_x - 1,
+        f"{ci_lower:.1%}",
+        color="blue",
+        fontsize=9,
+        ha="center",
+        va="bottom",
+    )
+    plt.text(
+        ci_upper,
+        n_x - 1,
+        f"{ci_upper:.1%}",
+        color="red",
+        fontsize=9,
+        ha="center",
+        va="bottom",
+    )
+
     election_years = [election.year for election in elections]
     min_election_year = min(election_years)
     max_election_year = max(election_years)
