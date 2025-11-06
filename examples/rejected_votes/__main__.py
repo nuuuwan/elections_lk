@@ -66,7 +66,11 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     election_years = [election.year for election in elections]
     min_election_year = min(election_years)
     max_election_year = max(election_years)
-    elections_label = f"({min_election_year} - {max_election_year})"
+    elections_label = (
+        f"({min_election_year} - {max_election_year})"
+        if min_election_year != max_election_year
+        else f"({min_election_year})"
+    )
 
     plt.title(
         "Rejected Votes"
