@@ -63,8 +63,7 @@ def plot_bars(
             color=color,
         )
 
-        if q >= 1:
-            uppers.append((x_item, ent.id, p_rej))
+        uppers.append((x_item, ent.id, p_rej))
 
     uppers.sort(key=lambda t: t[1])
     for upper in uppers:
