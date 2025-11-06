@@ -95,7 +95,66 @@ Let's visualize these districts in further detail.
 
 - Passara (8.85%)
 
+# Concluding Discussion
 
+The following discussion contains speculations and opinions about possible reasons for the observed patterns. These speculations are NOT based on data or rigorous analysis, but rather on contextual knowledge and general observations. They should be viewed as hypotheses that would require further investigation and proper research to validate.
+
+## Summary of Key Findings
+
+The data reveals three notable patterns:
+
+1. **Temporal stability**: Rejection rates have remained relatively consistent across election years (1989-2024), with no individual year showing statistically significant deviation from the mean of 5.54%.
+
+2. **Geographic concentration**: Higher rejection rates are concentrated in specific regions:
+   - Northern Province (Jaffna and Vanni districts)
+   - Central Highlands (Nuwara Eliya, parts of Kandy, Matale, and Badulla)
+
+3. **Postal vote anomaly**: Postal votes in Batticaloa, Kegalle, and Ratnapura show significantly lower rejection rates than the national average.
+
+## Possible Explanations (Speculative)
+
+### Why might the Northern Province have higher rejection rates?
+
+The Northern Province, particularly districts like Jaffna, Vanni, Mullaitivu, and Kilinochchi, experienced prolonged civil conflict and displacement. Possible contributing factors could include:
+
+- **Voter unfamiliarity**: Displacement and conflict may have disrupted civic education and voting experience across generations
+- **Language and literacy**: Different linguistic contexts might affect ballot comprehension
+- **Administrative challenges**: Post-conflict reconstruction may have affected electoral infrastructure and voter education programs
+- **Population changes**: Significant displacement and resettlement may have created communities with varying levels of electoral experience
+
+### Why might the Central Highlands have higher rejection rates?
+
+The Central Highlands, particularly the estate sector areas (Nuwara Eliya, Walapane, Hanguranketha, Maskeliya), show elevated rejection rates. Possible factors include:
+
+- **Socioeconomic factors**: Estate communities have historically faced educational and economic challenges
+- **Language barriers**: Tamil-speaking estate communities may face challenges with ballot design or instructions
+- **Civic education access**: Geographic isolation and work patterns in estate areas may limit access to voter education
+- **Historical context**: Historical disenfranchisement of the estate Tamil community means some areas may have relatively recent voting experience
+
+### Why might postal votes have lower rejection rates?
+
+The significantly lower rejection rates in postal votes for certain districts is intriguing:
+
+- **Education and literacy**: Postal voters (government servants, police, military) may have higher average education levels
+- **Time and care**: Postal voting allows more time to carefully complete the ballot compared to polling station voting
+- **Assistance and guidance**: Postal voting may involve more administrative support or clearer instructions
+- **Sample bias**: The postal vote population is not representative of the general population
+
+## Need for Further Research
+
+These observations raise important questions that warrant systematic investigation:
+
+- What role does voter education play in ballot rejection rates?
+- How do linguistic and cultural factors affect ballot comprehension?
+- What impact does socioeconomic status have on voting accuracy?
+- Are there design improvements to ballots that could reduce rejection rates?
+- How effective are current voter education programs in different regions?
+
+Understanding these patterns could help election authorities develop targeted interventions to ensure every vote counts and that all communities can participate effectively in the democratic process.
+
+# Appendix: Code & Data used in this Analysis
+
+- [https://github.com/nuuuwan/elections_lk](https://github.com/nuuuwan/elections_lk)
 
 # Appendix: Statistics
 
