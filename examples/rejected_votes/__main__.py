@@ -19,7 +19,8 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     ci_lower, ci_upper = dist.interval(0.95)
 
     width = 8
-    plt.figure(figsize=(width, width * max(1, n_x / 100)))
+    height = width * 9 / 16
+    plt.figure(figsize=(width, height * max(1, n_x / 100)))
 
     # Create horizontal lollipop chart
     y_positions = range(len(x_items))
