@@ -1,8 +1,8 @@
 # Rejected Votes in Sri Lankan Parliamentary Elections
 
-In this analysis, we explore two questions:
+In this analysis, we explore three questions:
 
-- Were rejected votes significantly higher in some election years?
+- **Were rejected votes significantly higher or lower** in some election years?
 - In particular electoral districts?
 - In particular polling divisions/postal vote results?
 
