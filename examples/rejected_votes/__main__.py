@@ -10,20 +10,23 @@ from elections_lk import ElectionParliamentary
 
 log = Log(os.path.basename(os.path.dirname(__file__)))
 
+CONF = 0.95
+
 
 def get_color(q, alpha=None):
-    alpha = alpha or (1 if q >= 1 else 0.2)
+    alpha = alpha or (1 if q >= 1 else 0.5)
     return (q, q if q < 0.5 else 1 - q, 1 - q, alpha)
 
 
-def plot_bars(elections, x_label, x_items, p_rejected):
-    n_x = len(x_items)
-    if n_x == 1:
+def plot_bars(elections, parent_ent_id, ents, x_label, x_items, p_rejected):
+    display_ents = [ent for ent in ents if parent_ent_id in ent.id]
+    n_x = len(display_ents)
+    if n_x <= 1:
         return
     mean_p_rejected = np.mean(p_rejected)
     std_p_rejected = np.std(p_rejected)
     dist = stats.norm(loc=mean_p_rejected, scale=std_p_rejected)
-    ci_lower, ci_upper = dist.interval(0.95)
+    ci_lower, ci_upper = dist.interval(CONF)
 
     width = 8
     height = width
@@ -31,16 +34,19 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     y_positions = range(len(x_items))
 
     font_size = min(8, 1000 / n_x)
-    for i, (x_item, p_rej, y_pos) in enumerate(
-        zip(x_items, p_rejected, y_positions)
+    for i, (x_item, p_rej, y_pos, ent) in enumerate(
+        zip(x_items, p_rejected, y_positions, ents)
     ):
+        if parent_ent_id not in ent.id:
+            continue
+
         q = (p_rej - ci_lower) / (ci_upper - ci_lower)
         q = min(max(q, 0), 1)
         color = get_color(q)
 
         plt.plot(p_rej, y_pos, "o", color=color, markersize=font_size)
         plt.annotate(
-            f"{x_item} ({p_rej:.1%})",
+            f"{p_rej:.2%} {x_item}",
             xy=(p_rej, i),
             xytext=(6, -1),
             textcoords="offset points",
@@ -49,17 +55,22 @@ def plot_bars(elections, x_label, x_items, p_rejected):
             color=color,
         )
 
-    for [p, q] in zip([ci_lower, mean_p_rejected, ci_upper], [0, 0.5, 1]):
+    for [p, q, legend_label] in zip(
+        [ci_upper, mean_p_rejected, ci_lower],
+        [1, 0.5, 0],
+        [
+            f"{CONF:.0%} CI Upper",
+            "Mean Reject %",
+            f"{CONF:.0%} CI Lower",
+        ],
+    ):
         color = get_color(q, 1)
-        plt.axvline(x=p, color=color, linestyle="--", alpha=0.25)
-        plt.text(
-            p,
-            n_x - 1 + 0.25,
-            f"{p:.1%}",
+        plt.axvline(
+            x=p,
             color=color,
-            fontsize=9,
-            ha="center",
-            va="bottom",
+            linestyle="--",
+            alpha=0.25,
+            label=f"{legend_label} ({p:.2%})",
         )
 
     election_years = [election.year for election in elections]
@@ -79,7 +90,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     plt.yticks([])
     plt.xticks([])
 
-    K = (ci_upper - ci_lower) / 2
+    K = (ci_upper - ci_lower) / 3
     plt.xlim(ci_lower - K, ci_upper + K)
 
     # Remove outer box (spines)
@@ -99,6 +110,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         chart_id += f"{min_election_year}"
     else:
         chart_id += f"{min_election_year}-{max_election_year}"
+    chart_id += f"-{parent_ent_id}"
     image_path = os.path.join(
         os.path.dirname(__file__),
         f"By-{chart_id}.png",
@@ -118,15 +130,18 @@ def q1(elections):
 
     plot_bars(
         elections,
+        "LK",
+        [Ent.from_id("LK") for year in years],
         "Election Year",
         years,
         p_rejected,
     )
 
 
-def q2(elections, ent_type):
+def q2(elections, parent_ent_id, ent_type):
     # Q2: Were rejected votes significantly higher in particular polling divisions?
     ents = Ent.list_from_type(ent_type)
+    ents.reverse()
 
     p_rejected_for_ents = []
     ent_names = [ent.name for ent in ents]
@@ -140,7 +155,14 @@ def q2(elections, ent_type):
         mean_p_rejected_for_ent = p_sum_rejected / p_sum_polled
         p_rejected_for_ents.append(mean_p_rejected_for_ent)
 
-    plot_bars(elections, ent_type.name.title(), ent_names, p_rejected_for_ents)
+    plot_bars(
+        elections,
+        parent_ent_id,
+        ents,
+        ent_type.name.title(),
+        ent_names,
+        p_rejected_for_ents,
+    )
 
 
 if __name__ == "__main__":
@@ -149,8 +171,9 @@ if __name__ == "__main__":
         for election in ElectionParliamentary.list_all()
         if election.year != "2000"
     ]
-    latest_election = [all_elections[-1]]
-    for elections in [all_elections, latest_election]:
+    for elections in [all_elections]:
         q1(elections)
-        q2(elections, EntType.DISTRICT)
-        q2(elections, EntType.PD)
+        q2(elections, "EC", EntType.ED)
+
+        for parent_ent_id in ["EC", "EC-01", "EC-06", "EC-10", "EC-11"]:
+            q2(elections, parent_ent_id, EntType.PD)
