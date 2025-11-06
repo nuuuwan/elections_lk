@@ -22,7 +22,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
 
     # Create horizontal lollipop chart
     y_positions = range(len(x_items))
-    plt.hlines(y=y_positions, xmin=0, xmax=p_rejected, color="grey", alpha=0.4)
+    plt.hlines(y=y_positions, xmin=0, xmax=p_rejected, color="grey", alpha=0.2)
     plt.plot(p_rejected, y_positions, "o", color=(1, 0, 0, 0.8), markersize=8)
 
     plt.axvline(x=mean_p_rejected, color="grey", linestyle="--", label="Mean")
