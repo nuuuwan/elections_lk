@@ -4,7 +4,7 @@ In this analysis, we explore two questions:
 
 - Were rejected votes significantly higher in some election years?
 - In particular electoral districts?
-- In particular polling divisions?
+- In particular polling divisions/postal vote results?
 
 We exclude results from 2000 because the Election Commission's official results do not contain rejected votes at a polling division level.
 
@@ -20,7 +20,7 @@ When we plot the data for election years, we get the following:
 
 ![By-Election-Year-1989-2024-LK.png](By-Election-Year-1989-2024-LK.png)
 
-The mean rejection rate across all elections is 5.58%, and the 95% confidence interval ranges from 4.13% to 7.03%.
+The mean rejection rate across all elections is 5.54%, and the 95% confidence interval ranges from 4.11% to 6.97%.
 
 No election's rejection rate falls outside this range, though 2010 (6.91%) comes close.
 
@@ -33,4 +33,25 @@ When we apply the same analysis to electoral districts, we get the following plo
 
 ![By-Ed-1989-2024-EC.png](By-Ed-1989-2024-EC.png)
 
-## Q2. Were rejected votes significantly higher in particular polling divisions?
+The mean rejection rate across all elections remains unchanged at 5.54%, but the 95% confidence interval is larger, from 3.27% to 7.80%, since we have a different number of samples.
+
+Nuwara Eliya (8.57%), Jaffna (8.39%) and Vanni (7.98%) have % rejected votes above the upper limit of the confidence interval. No electoral district is below the lower limit.
+
+And so, we can conclude that there is evidence (95% condifience), that  Nuwara Eliya , Jaffna  and Vanni have % rejected cotes significantly higher than the limit.
+
+We will not speculate on the reasons for this, but instead we will look at more granular data at the polling division and postal vote result level.
+
+
+## Q3. Were rejected votes significantly higher in particular polling divisions or postal vote results?
+
+For polling divisions/postal votes, we get this plot. 
+
+![By-Pd-1989-2024-EC.png](By-Pd-1989-2024-EC.png)
+
+As before, the mean rejection rate across all elections remains unchanged at 5.54%, but the 95% confidence interval is even larger, from 2.53% to 8.54%.
+
+Postal Votes for Batticaloa (1.69%), Kegalle (2.48%), and Ratnapura (2.36%) is below the lower limit of the confidence interval. Several results in the Kandy, Matale, Nuwara-Eliya, Jaffna, Vanni, and Badulla electoral districts are above the upper limit of the confidence interval. We will look at the latter group in more detail.
+
+### Kandy Electoral District
+
+
