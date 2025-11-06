@@ -18,6 +18,8 @@ def get_color(q, alpha=None):
 
 def plot_bars(elections, x_label, x_items, p_rejected):
     n_x = len(x_items)
+    if n_x == 1:
+        return
     mean_p_rejected = np.mean(p_rejected)
     std_p_rejected = np.std(p_rejected)
     dist = stats.norm(loc=mean_p_rejected, scale=std_p_rejected)
@@ -78,6 +80,10 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     )
     plt.xlabel("Rejected Votes (%)")
     plt.yticks([])
+
+    K = (ci_upper - ci_lower) / 2
+    plt.xlim(ci_lower - K, ci_upper + K)
+
     plt.legend()
     plt.gca().xaxis.set_major_formatter(
         plt.FuncFormatter(lambda y, _: f"{y:.0%}")
