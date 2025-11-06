@@ -6,7 +6,7 @@ In this analysis, we explore two questions:
 - In particular electoral districts?
 - In particular polling divisions/postal vote results?
 
-We exclude results from 2000 because the Election Commission's official results do not contain rejected votes at a polling division level.
+We exclude results from 2000 because the Election Commission's [official results](https://elections.gov.lk/web/wp-content/uploads/election-results/parliamentary-elections/general-election-2000.pdf) do not contain rejected votes at a polling division level.
 
 ## Q1. Were % rejected votes significantly higher or lower in some election years?
 
