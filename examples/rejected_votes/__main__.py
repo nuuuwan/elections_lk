@@ -10,7 +10,8 @@ from elections_lk import ElectionParliamentary
 log = Log(os.path.basename(os.path.dirname(__file__)))
 
 
-if __name__ == "__main__":
+def q1():
+    # Q1: Were rejected votes higher in some elections?
     years = []
     p_rejected = []
     for election in ElectionParliamentary.list_all():
@@ -49,6 +50,10 @@ if __name__ == "__main__":
     plt.gca().yaxis.set_major_formatter(
         plt.FuncFormatter(lambda y, _: f"{y:.1%}")
     )
-    image_path = os.path.join(os.path.dirname(__file__), "rejected_votes.png")
+    image_path = os.path.join(os.path.dirname(__file__), "q1.png")
     plt.savefig(image_path)
     log.info(f"Wrote {image_path}")
+
+
+if __name__ == "__main__":
+    q1()
