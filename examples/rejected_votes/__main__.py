@@ -37,7 +37,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         plt.plot(p_rej, y_pos, "o", color=color, markersize=8)
 
         plt.annotate(
-            f"{x_item}",
+            f"{x_item} ({p_rej:.1%})",
             xy=(p_rej, i),
             xytext=(10, -0.5),
             textcoords="offset points",
