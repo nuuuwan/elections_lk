@@ -35,7 +35,7 @@ def plot_bars(
     ci_lower, ci_upper = dist.interval(CONF)
 
     width = 8
-    height = width
+    height = width * 9 / 16
     plt.figure(figsize=(width, height * max(1, n_x / 100)))
     y_positions = range(len(x_items))
 
