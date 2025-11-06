@@ -2,8 +2,9 @@
 
 In this analysis, we explore two questions:
 
-- Were rejected votes higher in some election years?
-- Were rejected votes significantly higher in particular polling divisions?
+- Were rejected votes significantly higher in some election years?
+- In particular electoral districts?
+- In particular polling divisions?
 
 We exclude results from 2000 because the Election Commission's official results do not contain rejected votes at a polling division level.
 
@@ -26,6 +27,10 @@ No election's rejection rate falls outside this range, though 2010 (6.91%) comes
 Therefore, we can conclude that there is no significant evidence that rejected votes were notably higher or lower in any particular election year.
 
 
-## Q2. Were rejected votes significantly higher in particular polling divisions?
+## Q2. Were rejected votes significantly higher in particular electoral districts?
 
-(TODO)
+When we apply the same analysis to electoral districts, we get the following plot.
+
+![By-Ed-1989-2024-EC.png](By-Ed-1989-2024-EC.png)
+
+## Q2. Were rejected votes significantly higher in particular polling divisions?
