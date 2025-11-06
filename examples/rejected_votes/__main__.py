@@ -204,5 +204,14 @@ if __name__ == "__main__":
         q1(elections)
         q2(elections, "EC", EntType.ED)
 
-        for parent_ent_id in ["EC", "EC-01", "EC-06", "EC-10", "EC-11"]:
+        for parent_ent_id in [
+            "EC",
+            "EC-01",
+            "EC-04",
+            "EC-05",
+            "EC-06",
+            "EC-10",
+            "EC-11",
+            "EC-19",
+        ]:
             q2(elections, parent_ent_id, EntType.PD)
