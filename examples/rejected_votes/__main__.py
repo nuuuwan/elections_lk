@@ -70,8 +70,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         + f" in Sri Lankan Parliamentary Elections {elections_label}"
     )
     plt.xlabel("Rejected Votes (%)")
-    plt.ylabel(x_label)
-    plt.yticks(y_positions, x_items, fontsize=min(12, int(800 / n_x)))
+    plt.yticks([])
     plt.legend()
     plt.gca().xaxis.set_major_formatter(
         plt.FuncFormatter(lambda y, _: f"{y:.0%}")
