@@ -24,7 +24,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     ci_lower, ci_upper = dist.interval(0.95)
 
     width = 8
-    height = width * 9 / 16
+    height = width
     plt.figure(figsize=(width, height * max(1, n_x / 100)))
 
     # Create horizontal lollipop chart
@@ -38,15 +38,15 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         q = min(max(q, 0), 1)
         color = get_color(q)
 
-        plt.hlines(y=y_pos, xmin=0, xmax=p_rej, color="grey", alpha=0.2)
-        plt.plot(p_rej, y_pos, "o", color=color, markersize=8)
+        font_size = min(8, 1000 / n_x)
+        plt.plot(p_rej, y_pos, "o", color=color, markersize=font_size)
         plt.annotate(
             f"{x_item} ({p_rej:.1%})",
             xy=(p_rej, i),
-            xytext=(10, -0.5),
+            xytext=(6, -1),
             textcoords="offset points",
             va="center",
-            fontsize=8,
+            fontsize=font_size,
             color=color,
         )
 
