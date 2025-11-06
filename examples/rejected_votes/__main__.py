@@ -28,11 +28,9 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     width = 8
     height = width
     plt.figure(figsize=(width, height * max(1, n_x / 100)))
-
-    # Create horizontal lollipop chart
     y_positions = range(len(x_items))
 
-    # Color each lollipop based on whether it exceeds ci_upper
+    font_size = min(8, 1000 / n_x)
     for i, (x_item, p_rej, y_pos) in enumerate(
         zip(x_items, p_rejected, y_positions)
     ):
@@ -40,7 +38,6 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         q = min(max(q, 0), 1)
         color = get_color(q)
 
-        font_size = min(8, 1000 / n_x)
         plt.plot(p_rej, y_pos, "o", color=color, markersize=font_size)
         plt.annotate(
             f"{x_item} ({p_rej:.1%})",
@@ -57,7 +54,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         plt.axvline(x=p, color=color, linestyle="--", alpha=0.25)
         plt.text(
             p,
-            n_x - 1 + (1 / n_x),
+            n_x - 1 + 0.25,
             f"{p:.1%}",
             color=color,
             fontsize=9,
@@ -152,11 +149,8 @@ if __name__ == "__main__":
         for election in ElectionParliamentary.list_all()
         if election.year != "2000"
     ]
-    elections_last_20_years = [
-        election for election in all_elections if int(election.year) >= 2004
-    ]
     latest_election = [all_elections[-1]]
-    for elections in [all_elections, elections_last_20_years, latest_election]:
+    for elections in [all_elections, latest_election]:
         q1(elections)
         q2(elections, EntType.DISTRICT)
         q2(elections, EntType.PD)
