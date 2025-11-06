@@ -40,6 +40,8 @@ def plot_bars(
     y_positions = range(len(x_items))
 
     font_size = min(8, 1000 / n_x)
+    uppers = []
+
     for i, (x_item, p_rej, y_pos, ent) in enumerate(
         zip(x_items, p_rejected, y_positions, ents)
     ):
@@ -60,6 +62,13 @@ def plot_bars(
             fontsize=font_size,
             color=color,
         )
+
+        if q >= 1:
+            uppers.append((x_item, ent.id, p_rej))
+
+    uppers.sort(key=lambda t: t[1])
+    for upper in uppers:
+        print(f"- {upper[0]} ({upper[2]:.2%})")
 
     for [p, q, legend_label] in zip(
         [ci_upper, mean_p_rejected, ci_lower],

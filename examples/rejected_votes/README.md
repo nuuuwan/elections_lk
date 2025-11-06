@@ -50,8 +50,49 @@ For polling divisions/postal votes, we get this plot.
 
 As before, the mean rejection rate across all elections remains unchanged at 5.54%, but the 95% confidence interval is even larger, from 2.53% to 8.54%.
 
-Postal Votes for Batticaloa (1.69%), Kegalle (2.48%), and Ratnapura (2.36%) is below the lower limit of the confidence interval. Several results in the Kandy, Matale, Nuwara-Eliya, Jaffna, Vanni, and Badulla electoral districts are above the upper limit of the confidence interval. We will look at the latter group in more detail.
+Postal Votes for Batticaloa (1.69%), Kegalle (2.48%), and Ratnapura (2.36%) is below the lower limit of the confidence interval. Several results in the Kandy, Matale, Nuwara-Eliya, Jaffna, Vanni, and Badulla electoral districts are above the upper limit of the confidence interval.
 
-### Kandy Electoral District
+Let's visualize these districts in further detail.
 
+### Kandy 
 
+![By-Pd-1989-2024-EC-04.png](By-Pd-1989-2024-EC-04.png)
+
+- Teldeniya (8.82%)
+
+### Matale 
+
+![By-Pd-1989-2024-EC-05.png](By-Pd-1989-2024-EC-05.png)
+
+- Rattota (8.60%)
+
+### Nuwara-Eliya
+
+![By-Pd-1989-2024-EC-06.png](By-Pd-1989-2024-EC-06.png)
+
+- Nuwara Eliya Maskeliya (8.64%)
+- Hanguranketha (9.07%)
+- Walapane (9.48%)
+
+### Jaffna 
+
+![By-Pd-1989-2024-EC-10.png](By-Pd-1989-2024-EC-10.png)
+
+- Vaddukoddai (9.72%)
+- Kankesanthurai (8.57%)
+- Kopay (9.04%)
+- Udupiddy (8.69%)
+- Chavakachcheri (10.10%)
+- Kilinochchi (10.27%)
+
+### Vanni 
+
+![By-Pd-1989-2024-EC-11.png](By-Pd-1989-2024-EC-11.png)
+
+- Mullaitivu (10.52%)
+
+### Badulla 
+
+![By-Pd-1989-2024-EC-19.png](By-Pd-1989-2024-EC-19.png)
+
+- Passara (8.85%)
