@@ -84,6 +84,13 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     K = (ci_upper - ci_lower) / 2
     plt.xlim(ci_lower - K, ci_upper + K)
 
+    # Remove outer box (spines)
+    ax = plt.gca()
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+
     plt.legend()
     plt.gca().xaxis.set_major_formatter(
         plt.FuncFormatter(lambda y, _: f"{y:.0%}")
