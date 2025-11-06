@@ -11,6 +11,11 @@ from elections_lk import ElectionParliamentary
 log = Log(os.path.basename(os.path.dirname(__file__)))
 
 
+def get_color(q, alpha=None):
+    alpha = alpha or (1 if q >= 1 else 0.2)
+    return (q, q if q < 0.5 else 1 - q, 1 - q, alpha)
+
+
 def plot_bars(elections, x_label, x_items, p_rejected):
     n_x = len(x_items)
     mean_p_rejected = np.mean(p_rejected)
@@ -31,12 +36,10 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     ):
         q = (p_rej - ci_lower) / (ci_upper - ci_lower)
         q = min(max(q, 0), 1)
-        alpha = 1 if p_rej > ci_upper else 0.2
-        color = (q, q if q < 0.5 else 1 - q, 1 - q, alpha)
+        color = get_color(q)
 
         plt.hlines(y=y_pos, xmin=0, xmax=p_rej, color="grey", alpha=0.2)
         plt.plot(p_rej, y_pos, "o", color=color, markersize=8)
-
         plt.annotate(
             f"{x_item} ({p_rej:.1%})",
             xy=(p_rej, i),
@@ -47,47 +50,18 @@ def plot_bars(elections, x_label, x_items, p_rejected):
             color=color,
         )
 
-    plt.axvline(x=mean_p_rejected, color="grey", linestyle="--", label="Mean")
-    plt.axvline(
-        x=ci_lower,
-        color="blue",
-        linestyle=":",
-        label="95% CI Lower",
-    )
-    plt.axvline(
-        x=ci_upper,
-        color="red",
-        linestyle=":",
-        label="95% CI Upper",
-    )
-
-    plt.text(
-        mean_p_rejected,
-        n_x - 1,
-        f"{mean_p_rejected:.1%}",
-        color="grey",
-        fontsize=9,
-        ha="center",
-        va="bottom",
-    )
-    plt.text(
-        ci_lower,
-        n_x - 1,
-        f"{ci_lower:.1%}",
-        color="blue",
-        fontsize=9,
-        ha="center",
-        va="bottom",
-    )
-    plt.text(
-        ci_upper,
-        n_x - 1,
-        f"{ci_upper:.1%}",
-        color="red",
-        fontsize=9,
-        ha="center",
-        va="bottom",
-    )
+    for [p, q] in zip([ci_lower, mean_p_rejected, ci_upper], [0, 0.5, 1]):
+        color = get_color(q, 1)
+        plt.axvline(x=p, color=color, linestyle="--", alpha=0.25)
+        plt.text(
+            p,
+            n_x - 1,
+            f"{p:.1%}",
+            color=color,
+            fontsize=9,
+            ha="center",
+            va="bottom",
+        )
 
     election_years = [election.year for election in elections]
     min_election_year = min(election_years)
