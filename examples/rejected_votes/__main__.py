@@ -63,7 +63,11 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         plt.FuncFormatter(lambda y, _: f"{y:.1%}")
     )
 
-    id = f"{x_label.replace(' ', '-')}-{min_election_year}-{max_election_year}"
+    id = f"{x_label.replace(' ', '-')}-"
+    if min_election_year == max_election_year:
+        id += f"{min_election_year}"
+    else:
+        id += f"{min_election_year}-{max_election_year}"
     image_path = os.path.join(
         os.path.dirname(__file__),
         f"By-{id}.png",
@@ -117,7 +121,8 @@ if __name__ == "__main__":
     elections_last_20_years = [
         election for election in all_elections if int(election.year) >= 2004
     ]
-    for elections in [all_elections, elections_last_20_years]:
+    latest_election = [all_elections[-1]]
+    for elections in [all_elections, elections_last_20_years, latest_election]:
         q1(elections)
         q2(elections, EntType.DISTRICT)
         q2(elections, EntType.PD)
