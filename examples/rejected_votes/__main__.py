@@ -18,13 +18,19 @@ def get_color(q, alpha=None):
     return (q, q if q < 0.5 else 1 - q, 1 - q, alpha)
 
 
-def plot_bars(elections, parent_ent_id, ents, x_label, x_items, p_rejected):
+def plot_bars(
+    elections, parent_ent_id, ents, x_label, x_items, p_rejected, polled
+):
     display_ents = [ent for ent in ents if parent_ent_id in ent.id]
     n_x = len(display_ents)
     if n_x <= 1:
         return
-    mean_p_rejected = np.mean(p_rejected)
-    std_p_rejected = np.std(p_rejected)
+
+    mean_p_rejected = np.average(p_rejected, weights=polled)
+    variance = np.average(
+        (np.array(p_rejected) - mean_p_rejected) ** 2, weights=polled
+    )
+    std_p_rejected = np.sqrt(variance)
     dist = stats.norm(loc=mean_p_rejected, scale=std_p_rejected)
     ci_lower, ci_upper = dist.interval(CONF)
 
@@ -123,10 +129,12 @@ def q1(elections):
     # Q1: Were rejected votes higher in some elections?
     years = []
     p_rejected = []
+    polled = []
     for election in elections:
         years.append(int(election.year))
         vote_summary = election.lk_result.vote_summary
         p_rejected.append(vote_summary.p_rejected)
+        polled.append(vote_summary.polled)
 
     plot_bars(
         elections,
@@ -135,6 +143,7 @@ def q1(elections):
         "Election Year",
         years,
         p_rejected,
+        polled,
     )
 
 
@@ -146,15 +155,19 @@ def q2(elections, parent_ent_id, ent_type):
 
     p_rejected_for_ents = []
     ent_names = [ent.name for ent in ents]
+    polled = []
     for ent in ents:
         p_sum_polled = 0
         p_sum_rejected = 0
+        sum_polled = 0
         for election in elections:
             vote_summary = election.get_result_for_id(ent.id).vote_summary
             p_sum_polled += vote_summary.polled
             p_sum_rejected += vote_summary.rejected
+            sum_polled += vote_summary.polled
         mean_p_rejected_for_ent = p_sum_rejected / p_sum_polled
         p_rejected_for_ents.append(mean_p_rejected_for_ent)
+        polled.append(sum_polled)
 
     plot_bars(
         elections,
@@ -163,6 +176,7 @@ def q2(elections, parent_ent_id, ent_type):
         ent_type.name.title(),
         ent_names,
         p_rejected_for_ents,
+        polled,
     )
 
 
