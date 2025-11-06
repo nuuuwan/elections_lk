@@ -109,11 +109,15 @@ def q2(elections, ent_type):
 
 
 if __name__ == "__main__":
-    elections = [
+    all_elections = [
         election
         for election in ElectionParliamentary.list_all()
         if election.year != "2000"
-    ][-5:]
-    q1(elections)
-    q2(elections, EntType.DISTRICT)
-    q2(elections, EntType.PD)
+    ]
+    elections_last_20_years = [
+        election for election in all_elections if int(election.year) >= 2004
+    ]
+    for elections in [all_elections, elections_last_20_years]:
+        q1(elections)
+        q2(elections, EntType.DISTRICT)
+        q2(elections, EntType.PD)
