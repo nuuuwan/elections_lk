@@ -105,14 +105,14 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         plt.FuncFormatter(lambda y, _: f"{y:.0%}")
     )
 
-    id = f"{x_label.replace(' ', '-')}-"
+    chart_id = f"{x_label.replace(' ', '-')}-"
     if min_election_year == max_election_year:
-        id += f"{min_election_year}"
+        chart_id += f"{min_election_year}"
     else:
-        id += f"{min_election_year}-{max_election_year}"
+        chart_id += f"{min_election_year}-{max_election_year}"
     image_path = os.path.join(
         os.path.dirname(__file__),
-        f"By-{id}.png",
+        f"By-{chart_id}.png",
     )
     plt.savefig(image_path)
     log.info(f"Wrote {image_path}")
