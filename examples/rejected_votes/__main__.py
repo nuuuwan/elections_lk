@@ -57,7 +57,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         plt.axvline(x=p, color=color, linestyle="--", alpha=0.25)
         plt.text(
             p,
-            n_x - 1,
+            n_x - 1 + (1 / n_x),
             f"{p:.1%}",
             color=color,
             fontsize=9,
