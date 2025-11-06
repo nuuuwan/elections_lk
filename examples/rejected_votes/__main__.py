@@ -57,7 +57,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     )
     plt.xlabel(x_label)
     plt.ylabel("Rejected Votes (%)")
-    plt.xticks(rotation=90)
+    plt.xticks(rotation=90, fontsize=min(12, int(800 / len(x_items))))
     plt.legend()
     plt.gca().yaxis.set_major_formatter(
         plt.FuncFormatter(lambda y, _: f"{y:.1%}")
