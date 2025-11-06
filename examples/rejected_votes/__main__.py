@@ -92,7 +92,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         os.path.dirname(__file__),
         f"By-{chart_id}.png",
     )
-    plt.savefig(image_path)
+    plt.savefig(image_path, dpi=300)
     log.info(f"Wrote {image_path}")
 
 
