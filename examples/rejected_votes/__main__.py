@@ -139,7 +139,8 @@ def q1(elections):
 
 
 def q2(elections, parent_ent_id, ent_type):
-    # Q2: Were rejected votes significantly higher in particular polling divisions?
+    # Q2: Were rejected votes significantly higher
+    # in particular polling divisions?
     ents = Ent.list_from_type(ent_type)
     ents.reverse()
 
