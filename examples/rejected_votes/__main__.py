@@ -18,12 +18,33 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     dist = stats.norm(loc=mean_p_rejected, scale=std_p_rejected)
     ci_lower, ci_upper = dist.interval(0.95)
 
-    plt.figure(figsize=(16, 9 * max(1, n_x / 100)))
+    width = 8
+    plt.figure(figsize=(width, width * max(1, n_x / 100)))
 
     # Create horizontal lollipop chart
     y_positions = range(len(x_items))
-    plt.hlines(y=y_positions, xmin=0, xmax=p_rejected, color="grey", alpha=0.2)
-    plt.plot(p_rejected, y_positions, "o", color=(1, 0, 0, 0.8), markersize=8)
+
+    # Color each lollipop based on whether it exceeds ci_upper
+    for i, (x_item, p_rej, y_pos) in enumerate(
+        zip(x_items, p_rejected, y_positions)
+    ):
+        q = (p_rej - ci_lower) / (ci_upper - ci_lower)
+        q = min(max(q, 0), 1)
+        alpha = 1 if p_rej > ci_upper else 0.2
+        color = (q, q if q < 0.5 else 1 - q, 1 - q, alpha)
+
+        plt.hlines(y=y_pos, xmin=0, xmax=p_rej, color="grey", alpha=0.2)
+        plt.plot(p_rej, y_pos, "o", color=color, markersize=8)
+
+        plt.annotate(
+            f"{x_item}",
+            xy=(p_rej, i),
+            xytext=(10, -0.5),
+            textcoords="offset points",
+            va="center",
+            fontsize=8,
+            color=color,
+        )
 
     plt.axvline(x=mean_p_rejected, color="grey", linestyle="--", label="Mean")
     plt.axvline(
@@ -39,21 +60,6 @@ def plot_bars(elections, x_label, x_items, p_rejected):
         label="95% CI Upper",
     )
 
-    # Annotate bars that exceed the upper confidence interval
-    for i, (x_item, p_rej) in enumerate(zip(x_items, p_rejected)):
-        q = (p_rej - ci_lower) / (ci_upper - ci_lower)
-        q = min(max(q, 0), 1)
-        alpha = 1 if p_rej > ci_upper else 0.2
-        color = (q, 0, 1 - q, alpha)
-        plt.annotate(
-            f"{x_item}",
-            xy=(p_rej, i),
-            xytext=(10, -0.5),
-            textcoords="offset points",
-            va="center",
-            fontsize=8,
-            color=color,
-        )
     election_years = [election.year for election in elections]
     min_election_year = min(election_years)
     max_election_year = max(election_years)
