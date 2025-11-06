@@ -74,7 +74,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     plt.yticks(y_positions, x_items, fontsize=min(12, int(800 / n_x)))
     plt.legend()
     plt.gca().xaxis.set_major_formatter(
-        plt.FuncFormatter(lambda y, _: f"{y:.1%}")
+        plt.FuncFormatter(lambda y, _: f"{y:.0%}")
     )
 
     id = f"{x_label.replace(' ', '-')}-"
