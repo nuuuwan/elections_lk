@@ -103,42 +103,74 @@ The following discussion contains speculations and opinions about possible reaso
 
 The data reveals three notable patterns:
 
-1. **Temporal stability**: Rejection rates have remained relatively consistent across election years (1989-2024), with no individual year showing statistically significant deviation from the mean of 5.54%.
+1. **Temporal stability**: Rejection rates have remained relatively consistent across election years (1989-2024), with no individual year showing statistically significant deviation from the mean of 5.54%. The highest rate was in 2010 (6.91%) and the lowest in 2015 (4.42%), but both fall within the 95% confidence interval (4.11% to 6.97%).
 
 2. **Geographic concentration**: Higher rejection rates are concentrated in specific regions:
-   - Northern Province (Jaffna and Vanni districts)
-   - Central Highlands (Nuwara Eliya, parts of Kandy, Matale, and Badulla)
+   - **Northern Province**: Jaffna (8.39%) and Vanni (7.98%) districts significantly exceed the national average
+   - **Central Highlands**: Nuwara Eliya (8.57%) leads all districts, followed by Matale (7.50%) and parts of Kandy (6.53%) and Badulla (6.79%)
+   - **Lowest rates**: Matara (4.37%), Galle (4.45%), and Colombo (4.50%) show the lowest district-level rejection rates
 
-3. **Postal vote anomaly**: Postal votes in Batticaloa, Kegalle, and Ratnapura show significantly lower rejection rates than the national average.
+3. **Postal vote anomaly**: Postal votes consistently show significantly lower rejection rates than their corresponding districts:
+   - Batticaloa postal (1.69%) vs district average (6.19%)
+   - Ratnapura postal (2.36%) vs district average (5.32%)
+   - Kegalle postal (2.48%) vs district average (4.85%)
+   - Most districts show postal vote rejection rates between 2-3%, well below the national average of 5.54%
 
 ## Possible Explanations (Speculative)
 
 ### Why might the Northern Province have higher rejection rates?
 
-The Northern Province, particularly districts like Jaffna, Vanni, Mullaitivu, and Kilinochchi, experienced prolonged civil conflict and displacement. Possible contributing factors could include:
+The Northern Province, particularly districts like Jaffna, Vanni, Mullaitivu, and Kilinochchi, experienced prolonged civil conflict and displacement. The data shows exceptionally high rates in specific polling divisions:
+- Mullaitivu (10.52%) - the highest rate in the country
+- Kilinochchi (10.27%)
+- Chavakachcheri (10.10%)
+- Vaddukoddai (9.72%)
+
+Possible contributing factors could include:
 
 - **Voter unfamiliarity**: Displacement and conflict may have disrupted civic education and voting experience across generations
 - **Language and literacy**: Different linguistic contexts might affect ballot comprehension
 - **Administrative challenges**: Post-conflict reconstruction may have affected electoral infrastructure and voter education programs
 - **Population changes**: Significant displacement and resettlement may have created communities with varying levels of electoral experience
 
+Interestingly, postal votes in both Jaffna (3.01%) and Vanni (3.50%) are significantly lower than their district averages, following the national pattern.
+
 ### Why might the Central Highlands have higher rejection rates?
 
-The Central Highlands, particularly the estate sector areas (Nuwara Eliya, Walapane, Hanguranketha, Maskeliya), show elevated rejection rates. Possible factors include:
+The Central Highlands, particularly the estate sector areas, show elevated rejection rates. Nuwara Eliya district (8.57%) has the highest district-level rate in the country, with several polling divisions showing very high rates:
+- Walapane (9.48%)
+- Hanguranketha (9.07%)
+- Nuwara Eliya-Maskeliya (8.64%)
+- Teldeniya in Kandy (8.82%)
+- Passara in Badulla (8.85%)
+
+Possible factors include:
 
 - **Socioeconomic factors**: Estate communities have historically faced educational and economic challenges
 - **Language barriers**: Tamil-speaking estate communities may face challenges with ballot design or instructions
 - **Civic education access**: Geographic isolation and work patterns in estate areas may limit access to voter education
 - **Historical context**: Historical disenfranchisement of the estate Tamil community means some areas may have relatively recent voting experience
 
+The contrast is stark: while Nuwara Eliya district shows 8.57%, its postal votes are only 3.39% - less than half the district rate.
+
 ### Why might postal votes have lower rejection rates?
 
-The significantly lower rejection rates in postal votes for certain districts is intriguing:
+The significantly lower rejection rates in postal votes is consistent across almost all districts. The data shows:
+- **Lowest postal rates**: Batticaloa (1.69%), Matara (2.30%), Ratnapura (2.36%), Kegalle (2.48%)
+- **Typical postal range**: Most districts show postal rates between 2.5-3.5%
+- **Largest gaps**: Districts with high regular rates show the biggest postal vote differences
+  - Batticaloa: 1.69% (postal) vs 6.19% (district) - a 3.7× difference
+  - Nuwara Eliya: 3.39% (postal) vs 8.57% (district) - a 2.5× difference
+  - Jaffna: 3.01% (postal) vs 8.39% (district) - a 2.8× difference
+
+Possible explanations include:
 
 - **Education and literacy**: Postal voters (government servants, police, military) may have higher average education levels
 - **Time and care**: Postal voting allows more time to carefully complete the ballot compared to polling station voting
 - **Assistance and guidance**: Postal voting may involve more administrative support or clearer instructions
 - **Sample bias**: The postal vote population is not representative of the general population
+
+The consistency of this pattern across all districts strongly suggests that voter characteristics and voting conditions, rather than geographic or community factors, are the primary drivers of rejection rates.
 
 ## Need for Further Research
 
