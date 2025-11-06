@@ -40,7 +40,9 @@ if __name__ == "__main__":
         linestyle=":",
         label="95% CI Upper",
     )
-    plt.title("Rejected Votes in Sri Lankan Parliamentary Elections")
+    plt.title(
+        "Rejected Votes in Sri Lankan Parliamentary Elections (1989 - 2024"
+    )
     plt.xlabel("Election Year")
     plt.ylabel("Rejected Votes (%)")
     plt.legend()
