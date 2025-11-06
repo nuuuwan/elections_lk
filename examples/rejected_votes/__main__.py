@@ -80,6 +80,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     )
     plt.xlabel("Rejected Votes (%)")
     plt.yticks([])
+    plt.xticks([])
 
     K = (ci_upper - ci_lower) / 2
     plt.xlim(ci_lower - K, ci_upper + K)
