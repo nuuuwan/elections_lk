@@ -39,8 +39,6 @@ Nuwara Eliya (8.57%), Jaffna (8.39%) and Vanni (7.98%) have % rejected votes abo
 
 And so, we can conclude that there is evidence (95% condifience), that  Nuwara Eliya , Jaffna  and Vanni have % rejected cotes significantly higher than the limit.
 
-We will not speculate on the reasons for this, but instead we will look at more granular data at the polling division and postal vote result level.
-
 
 ## Q3. Were rejected votes significantly higher in particular polling divisions or postal vote results?
 
@@ -96,3 +94,4 @@ Let's visualize these districts in further detail.
 ![By-Pd-1989-2024-EC-19.png](By-Pd-1989-2024-EC-19.png)
 
 - Passara (8.85%)
+
