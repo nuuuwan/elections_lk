@@ -19,7 +19,7 @@ def plot_bars(elections, x_label, x_items, p_rejected):
     ci_lower, ci_upper = dist.interval(0.95)
 
     plt.figure(figsize=(16, 9))
-    plt.bar(x_items, p_rejected, color="r")
+    plt.bar(x_items, p_rejected, color=(1, 0, 0, 0.5))
     plt.axhline(y=mean_p_rejected, color="grey", linestyle="--", label="Mean")
     plt.axhline(
         y=ci_lower,
